@@ -1,5 +1,6 @@
 package com.team11.personalfood;
 
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -21,6 +22,11 @@ class FoodListViewHolder extends AbstractViewHolder<Food> {
         negativeIngredient = itemView.findViewById(R.id.negativeIngredient_textView);
         positiveIngredient = itemView.findViewById(R.id.positiveIngredient_textView);
         foodImage = itemView.findViewById(R.id.food_imageView);
+
+        Typeface typeface = Typeface.createFromAsset(itemView.getContext().getAssets(), "210 직장인의한마디R.ttf");
+        this.foodName.setTypeface(typeface);
+        this.negativeIngredient.setTypeface(typeface);
+        this.positiveIngredient.setTypeface(typeface);
     }
 
     @Override

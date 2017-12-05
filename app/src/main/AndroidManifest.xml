@@ -20,7 +20,7 @@
         <activity android:name=".ResultActivity" />
         <activity android:name=".ListActivity"
             android:windowSoftInputMode="adjustNothing"
-            ></activity>
+            />
     </application>
 
 </manifest>

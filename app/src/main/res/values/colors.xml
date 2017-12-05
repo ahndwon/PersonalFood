@@ -10,5 +10,6 @@
     <color name="colorBlack">#000000</color>
     <color name="colorGood">#14C95D</color>
     <color name="colorBad">#FC3A3A</color>
+    <color name="colorMiddleGray">#7C7C7C</color>
 
 </resources>

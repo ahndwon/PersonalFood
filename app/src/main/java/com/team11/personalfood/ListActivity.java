@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements OnFoodLoadListener{
+public class ListActivity extends BaseActivity implements OnFoodLoadListener{
 
     private RecyclerView foodListRecyclerView;
     private EditText searchEditText;
@@ -56,7 +56,6 @@ public class ListActivity extends AppCompatActivity implements OnFoodLoadListene
 
         adapter = new FoodListRecyclerAdapter();
         foodListRecyclerView.setAdapter(adapter);
-
 
     }
 
