@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FoodModel {
 
-    private static List<Food> foodList = new ArrayList<>();
+    private List<Food> foodList = new ArrayList<>();
     private OnFoodLoadListener onFoodLoadListener;
 
     public void setOnFoodLoadListener(OnFoodLoadListener onFoodLoadListener){

@@ -17,8 +17,6 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import static android.app.PendingIntent.getActivity;
-
 public class ListActivity extends AppCompatActivity implements OnFoodLoadListener{
 
     private static final String TAG = "ListActivity";
@@ -82,8 +80,6 @@ public class ListActivity extends AppCompatActivity implements OnFoodLoadListene
 
         return super.onCreateOptionsMenu(menu);
     }
-
-
 
     private void setUpFoodListView(){
         LinearLayoutManager manager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);

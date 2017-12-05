@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends BaseActivity {
     private static final int TAEYANG = 1;
     private static final int TAEEUM = 2;
     private static final int SOYANG = 3;

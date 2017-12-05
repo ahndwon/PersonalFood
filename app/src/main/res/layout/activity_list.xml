@@ -31,22 +31,26 @@
             android:maxLines="1"
             android:padding="10dp"
             android:textColor="@color/colorDarkGray"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/foodList_recyclerView"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
+        android:layout_height="105dp"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/list_toolbar"
+        app:layout_constraintVertical_bias="1.0">
+
+    </android.support.v7.widget.CardView>
+
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -54,6 +58,238 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.31" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/foodList_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.0">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginStart="9dp"
+        android:text="카테고리"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/riceCategory_button"
+        android:layout_width="34dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:text="밥/죽"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/kimchiCategory_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@android:color/transparent"
+        android:text="김치/젓갈/장아찌"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/riceCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/riceCategory_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/BreadCategory_button"
+        android:layout_width="67dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@android:color/transparent"
+        android:text="떡/빵/과자"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/kimchiCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/kimchiCategory_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/noddleCategory_button"
+        android:layout_width="59dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@android:color/transparent"
+        android:text="면류/만두"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/BreadCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/BreadCategory_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/saladCategory_button"
+        android:layout_width="67dp"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="샐러드/스프"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/riceCategory_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintStart_toEndOf="@+id/riceCategory_button"
+        app:layout_constraintTop_toTopOf="@+id/riceCategory_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/iceCreamCategory_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="음료수/빙과/유제품"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/saladCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/saladCategory_button" />
+
+    <Button
+        android:id="@+id/soupCategory_button"
+        android:layout_width="46dp"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="국물요리"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/iceCreamCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/iceCreamCategory_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/pizzaCategory_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="피자/스파게티/스..."
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/soupCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/soupCategory_button"
+        app:layout_constraintVertical_bias="0.166" />
+
+    <Button
+        android:id="@+id/msgCategory_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="장류/조미료/가루류"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintStart_toEndOf="@+id/saladCategory_button"
+        app:layout_constraintTop_toTopOf="@+id/saladCategory_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/sideDishCategory_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="반찬"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/msgCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/msgCategory_button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/sourceCategory_button"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="잼/드레싱/소스"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/sideDishCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/sideDishCategory_button"
+        app:layout_constraintVertical_bias="0.0"/>
+
+    <Button
+        android:id="@+id/etcCategory_button"
+        android:layout_width="52dp"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        android:text="기타 요리"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/sourceCategory_button"
+        app:layout_constraintTop_toBottomOf="@+id/sourceCategory_button"
+        app:layout_constraintVertical_bias="0.0"/>
 
 
 </android.support.constraint.ConstraintLayout>
