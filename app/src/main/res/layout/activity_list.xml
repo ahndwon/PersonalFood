@@ -8,26 +8,17 @@
     android:focusableInTouchMode="true"
     tools:context="com.team11.personalfood.ListActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/list_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/snippet_appbar"/>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="259dp"
         android:layout_height="38dp"
-        app:layout_constraintBottom_toBottomOf="@+id/list_toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/list_toolbar">
+        app:layout_constraintTop_toTopOf="@+id/toolbar">
 
         <EditText
             android:id="@+id/search_editText"

@@ -18,10 +18,12 @@
         </activity>
         <activity android:name=".TestActivity" />
         <activity android:name=".ResultActivity" />
-        <activity android:name=".ListActivity"
-            android:windowSoftInputMode="adjustNothing"
-            ></activity>
-        <activity android:name=".ChatActivity"></activity>
+        <activity
+            android:name=".ListActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignupActivity"></activity>
     </application>
 
 </manifest>

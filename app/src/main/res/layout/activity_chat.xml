@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/chat_send"
                 android:layout_margin="5dp"
-                android:background="@color/colorSearch"
+                android:background="@color/colorChatBackground"
                 android:orientation="vertical">
 
 
@@ -53,7 +53,7 @@
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorChatBottom"
                     android:padding="5dp"
                     app:srcCompat="@drawable/vecter_plus" />
 
@@ -64,7 +64,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="10"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorChatBottom"
                     android:inputType="textMultiLine"
                     android:paddingEnd="5dp"
                     android:paddingStart="10dp"
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorChatBottom"
                     android:text="전송"
                     android:textSize="20sp"
                     android:textStyle="normal|bold"
