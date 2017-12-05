@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TestActivity" />
+        <activity android:name=".ResultActivity" />
+        <activity android:name=".ListActivity"
+            android:windowSoftInputMode="adjustNothing"
+            ></activity>
     </application>
 
 </manifest>

@@ -1,3 +1,33 @@
 <resources>
-    <string name="app_name">PersonalFood</string>
+    <string name="app_name"></string>
+
+    <string name="question1">내 체질 무엇</string>
+
+    <string name="answer1.1">태양</string>
+    <string name="answer1.2">태음</string>
+    <string name="answer1.3">소양</string>
+    <string name="answer1.4">소음</string>
+
+    <string name="question2">지나 체질 무엇</string>
+
+    <string name="answer2.1">태양</string>
+    <string name="answer2.2">태음</string>
+    <string name="answer2.3">소양</string>
+    <string name="answer2.4">소음</string>
+
+    <string name="question3">한나 체질 무엇</string>
+
+    <string name="answer3.1">태양</string>
+    <string name="answer3.2">태음</string>
+    <string name="answer3.3">소양</string>
+    <string name="answer3.4">소음</string>
+
+    <string name="question4">동원 체질 무엇</string>
+
+    <string name="answer4.1">태양</string>
+    <string name="answer4.2">태음</string>
+    <string name="answer4.3">소양</string>
+    <string name="answer4.4">소음</string>
+
+    <string name="search_food"><font fgcolor="#FFFFFF">음식명을 입력하세요</font></string>
 </resources>
