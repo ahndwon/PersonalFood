@@ -11,13 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
+
+import com.team11.personalfood.Models.Food;
+import com.team11.personalfood.Models.FoodModel;
+import com.team11.personalfood.Utilities.FoodListRecyclerAdapter;
+import com.team11.personalfood.Utilities.OnFoodLoadListener;
 
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity implements OnFoodLoadListener{
+public class ListActivity extends BaseActivity implements OnFoodLoadListener {
 
     private static final String TAG = "ListActivity";
 

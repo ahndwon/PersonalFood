@@ -1,4 +1,4 @@
-package com.team11.personalfood;
+package com.team11.personalfood.Models;
 
 public class Food {
     private String foodName;

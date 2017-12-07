@@ -1,4 +1,6 @@
-package com.team11.personalfood;
+package com.team11.personalfood.Models;
+
+import com.team11.personalfood.Utilities.OnFoodLoadListener;
 
 import java.util.ArrayList;
 import java.util.List;

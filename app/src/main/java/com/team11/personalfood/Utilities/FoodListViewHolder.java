@@ -1,4 +1,4 @@
-package com.team11.personalfood;
+package com.team11.personalfood.Utilities;
 
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.team11.personalfood.Models.Food;
+import com.team11.personalfood.R;
 
 
 class FoodListViewHolder extends AbstractViewHolder<Food> {

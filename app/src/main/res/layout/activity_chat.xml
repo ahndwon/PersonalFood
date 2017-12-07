@@ -25,17 +25,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:id="@+id/chat_list"
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/chatList_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/chat_send"
                 android:layout_margin="5dp"
-                android:background="@color/colorChatBackground"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_above="@+id/chat_send"
+                android:background="@color/colorChatBackground">
 
+            </android.support.v7.widget.RecyclerView>
 
-            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/chat_send"
