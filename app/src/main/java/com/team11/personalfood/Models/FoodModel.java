@@ -15,10 +15,10 @@ public class FoodModel {
 
     }
 
-    public FoodModel(ArrayList<HashMap<String, String>> mArrayList, String tagFoodName, String tagPositiveIngredient, String tagNegativeIngredient1) {
+    public FoodModel(ArrayList<HashMap<String, String>> mArrayList, String tagFoodName, String tagNegativeIngredient, String tagPositiveIngredient) {
         for(HashMap hashMap : mArrayList){
-            foodList.add(new Food(hashMap.get(tagFoodName).toString(),hashMap.get(tagPositiveIngredient).toString(),
-                    hashMap.get(tagNegativeIngredient1).toString()));
+            foodList.add(new Food(hashMap.get(tagFoodName).toString(),hashMap.get(tagNegativeIngredient).toString(),
+                    hashMap.get(tagPositiveIngredient).toString()));
         }
     }
 

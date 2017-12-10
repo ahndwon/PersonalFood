@@ -5,10 +5,10 @@ public class Food {
     private String negativeIngredient;
     private String positiveIngredient;
 
-    public Food(String foodName, String negativeIngredient, String positiveIngerdient) {
+    public Food(String foodName, String negativeIngredient, String positiveIngredient) {
         this.foodName = foodName;
         this.negativeIngredient = negativeIngredient;
-        this.positiveIngredient = positiveIngerdient;
+        this.positiveIngredient = positiveIngredient;
     }
 
     public String getFoodName() {

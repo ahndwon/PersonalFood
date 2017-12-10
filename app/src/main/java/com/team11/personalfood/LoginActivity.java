@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void onRealLoginBtnClick(View view) {
-        Client client = new Client();
+        Client client = new Client(this);
         client.startLogin();
         if(client.getUserId() == mLogin.getText().toString() &&
                 client.getPassword() == mPassword.getText().toString()) {

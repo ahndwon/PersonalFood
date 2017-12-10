@@ -10,6 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -48,12 +49,13 @@ public class Client {
     String password;
 
     private LoginData loginData;
+    private InsertData insertData;
+    private Context mContext;
+    private ArrayList<HashMap<String, String>> mArrayList;
+    private String mJsonString;
 
-
-    ArrayList<HashMap<String, String>> mArrayList;
-    String mJsonString;
-
-    public Client() {
+    public Client(Context context) {
+        this.mContext = context;
         mArrayList = new ArrayList<>();
 
 //        GetData task = new GetData();
@@ -72,12 +74,15 @@ public class Client {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = ProgressDialog.show(mContext,
+                    "Please Wait", null, true, true);
         }
 
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            progressDialog.dismiss();
 
             Log.d(TAG, "response  - " + result);
 
@@ -145,13 +150,16 @@ public class Client {
         }
     }
 
-    public static class LoginData extends AsyncTask<String, Void, String> {
+    public class LoginData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
+        String errorString = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
+            progressDialog = ProgressDialog.show(mContext,
+                    "Please Wait", null, true, true);
         }
 
 
@@ -159,6 +167,17 @@ public class Client {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+            progressDialog.dismiss();
+
+            Log.d(TAG, "response  - " + result);
+
+            if (result == null){
+
+               Log.d(TAG,errorString);
+            }
+            else {
+
+            }
             Log.d(TAG, "POST response  - " + result);
         }
 
@@ -246,12 +265,14 @@ public class Client {
         }
     }
 
-    public static class InsertData extends AsyncTask<String, Void, String> {
+    public class InsertData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = ProgressDialog.show(mContext,
+                    "Please Wait", null, true, true);
 
         }
 
@@ -259,6 +280,8 @@ public class Client {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            progressDialog.dismiss();
+
             Log.d(TAG, "POST response  - " + result);
         }
 
@@ -296,9 +319,10 @@ public class Client {
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 //                httpURLConnection.setRequestProperty("content-type", "application/json");
-                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+//                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
 
                 httpURLConnection.setRequestProperty("Accept", "application/json");
+                httpURLConnection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
 //                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
@@ -326,15 +350,22 @@ public class Client {
 //                OutputStream outputStream = httpURLConnection.getOutputStream();
                 DataOutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
 //                outputStream.write(jsonParam.toString().getBytes("UTF-8"));
-                outputStream.writeBytes("[" + jsonParam.toString() + "]");
-//                outputStream.writeBytes("[{" + "'userID':"+"'personal'"+","+"'password':"+"'123456'"+
+//                outputStream.writeBytes("[" + jsonParam.toString() + "]");
+                outputStream.writeBytes(jsonParam.toString());
+                outputStream.writeBytes("[form:"+jsonParam.toString()+"]");
+//                outputStream.writeBytes("["+"form:"+"{" + "'userID':"+"'personal'"+","+"'password':"+"'123456'"+
 //                        ","+"'name':"+"'name'"+","+"'birth':"+"'2017-12-19'"+","+"'type':"+"'태음인'" + "}]");
 //                outputStream.writeBytes("[{" + "\"userID\":"+"'personal'"+","+"\"password\":"+"'123456'"+
 //                        ","+"\"name\":"+"'name'"+","+"\"birth\":"+"'2017-12-19'"+","+"\"type\":"+"'태음인'" + "}]");
+
                 outputStream.flush();
                 outputStream.close();
 
-                Log.d(TAG, "JSON - " + "[" + jsonParam.toString() + "]");
+
+                //LOG 찍어보기
+//                Log.d(TAG, "JSON - " + "[" + jsonParam.toString() + "]");
+                Log.d(TAG, "JSON - " + "["+"form:"+"{" + "'userID':"+"'personal'"+","+"'password':"+"'123456'"+
+                        ","+"'name':"+"'name'"+","+"'birth':"+"'2017-12-19'"+","+"'type':"+"'태음인'" + "}]");
 
 //                Log.d(TAG, "[{" + "'userID':"+"'personal'"+","+"'password':"+"'123456'"+
 //                        ","+"'name':"+"'name'"+","+"'birth':"+"'2017-12-19'"+","+"'type':"+"'태음인'" + "}]");
@@ -381,8 +412,15 @@ public class Client {
         }
     }
 
-
-    public ArrayList getResult() {
+    //음식 데이터 가져오기
+    public ArrayList getFoodResult(ArrayList<HashMap> typeIngredientList) {
+        String[] token= new String[0];
+        String[] negativeToken= new String[0];
+        String[] positiveToken= new String[0];
+        String negativeString ="";
+        String positiveString ="";
+        positiveToken = typeIngredientList.get(0).get(TAG_POSITIVE_INGREDIENT).toString().split(",");
+        negativeToken = typeIngredientList.get(0).get(TAG_NEGATIVE_INGREDIENT).toString().split(",");
         try {
             JSONArray jsonArray = new JSONArray(mJsonString);
 
@@ -393,18 +431,88 @@ public class Client {
                 String foodName = item.getString(TAG_FOOD_NAME);
                 String ingredient = item.getString(TAG_INGREDIENT);
 
+                token = ingredient.split(",");
+
+                HashMap<String, String> filteredHashMap = new HashMap<>();
+
+                filteredHashMap.put(TAG_FOOD_NAME, foodName);
+
+                for(int j = 0;j<token.length;j++) {
+                    for(int k = 0; k<negativeToken.length; k++){
+                        Log.d(TAG, "negative comparing : " + (negativeToken[k]) + "with" +token[j]);
+                        if(token[j].equals(negativeToken[k])){
+                            negativeString+=token[j] +", ";
+                        }
+                    }
+
+                    for(int k = 0; k<positiveToken.length; k++){
+                        Log.d(TAG, "positive comparing : " + (positiveToken[k]) + "with" +token[j]);
+                        if(token[j].equals(positiveToken[k])){
+                            positiveString+=token[j] +", ";
+                        }
+                    }
+                }
+
+                Log.d(TAG,"object -" + item);
+                Log.d(TAG,"object TAG_FOOD_NAME- " + item.getString(TAG_FOOD_NAME));
+                Log.d(TAG,"object TAG_INGREDIENT-" + item.getString(TAG_INGREDIENT));
+                if(negativeString.length()>0){
+                    filteredHashMap.put(TAG_NEGATIVE_INGREDIENT, negativeString.substring(0,negativeString.length()-2));
+                } else {
+                    filteredHashMap.put(TAG_NEGATIVE_INGREDIENT, "");
+
+                }
+                if(positiveString.length()>0) {
+                    filteredHashMap.put(TAG_POSITIVE_INGREDIENT, positiveString.substring(0,positiveString.length()-2));
+                } else {
+                    filteredHashMap.put(TAG_POSITIVE_INGREDIENT, "");
+
+                }
+
+                if(negativeString.length()>0 || positiveString.length()>0) {
+                    mArrayList.add(filteredHashMap);
+                }
+                negativeString="";
+                positiveString="";
+            }
+
+        } catch (JSONException e) {
+
+            Log.d(TAG, "showResult : ", e);
+        }
+        Log.d(TAG, "showFilteredArrayList : " + mArrayList);
+
+        return mArrayList;
+    }
+
+    //체질에 따른 재료 정보 가져오기
+    public ArrayList getTypeResult() {
+
+        try {
+            JSONArray jsonArray = new JSONArray(mJsonString);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+
+                String negIngredient = item.getString(TAG_NEGATIVE_INGREDIENT);
+                String posIngredient = item.getString(TAG_POSITIVE_INGREDIENT);
+
+
 
                 //여기서 재료와 체질 비교하는 코드 집어넣기
 
                 HashMap<String, String> hashMap = new HashMap<>();
 
-                hashMap.put(TAG_FOOD_NAME, foodName);
-                hashMap.put(TAG_POSITIVE_INGREDIENT, ingredient);
-                hashMap.put(TAG_NEGATIVE_INGREDIENT, ingredient);
+                hashMap.put(TAG_NEGATIVE_INGREDIENT, negIngredient);
+                hashMap.put(TAG_POSITIVE_INGREDIENT, posIngredient);
+
 
                 mArrayList.add(hashMap);
-                Log.d(TAG, "showArrayList : " + mArrayList);
+                Log.d(TAG, "showTypeArrayList : " + mArrayList);
             }
+
 
         } catch (JSONException e) {
 
@@ -413,9 +521,17 @@ public class Client {
         return mArrayList;
     }
 
+
+
     public void startLogin() {
         loginData = new LoginData();
         loginData.execute();
+
+    }
+
+    public void startSignup(String userId,String password,String name,String birth, String userType) {
+        insertData = new InsertData();
+        insertData.execute(userId, password, name, birth, userType);
 
     }
 

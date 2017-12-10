@@ -43,6 +43,8 @@ public class SignupActivity extends BaseActivity {
     private String name;
     private String birth;
 
+    private Client signupClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class SignupActivity extends BaseActivity {
         buttonInsert = findViewById(R.id.btn_register);
 
         calendar = Calendar.getInstance();
+        signupClient = new Client(this);
 
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -85,15 +88,14 @@ public class SignupActivity extends BaseActivity {
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 userId = mFieldId.getText().toString();
                 password = mFieldPassword.getText().toString();
                 name = mFieldName.getText().toString();
                 birth = mFieldBirth.getText().toString();
                 setType();
-                Client.InsertData task = new Client.InsertData();
-                task.execute(userId, password, name, birth, userType);
-
+//                loginClient.InsertData task = new Client.InsertData();
+//                task.execute(userId, password, name, birth, userType);userType
+                signupClient.startSignup(userId, password, name, birth, userType);
 
                 mFieldId.setText("");
                 mFieldPassword.setText("");
