@@ -127,8 +127,8 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         pizzaClient.getData("http://13.230.142.157:8080/a/data/피자-스파게티-스테이크");
         msgClient.getData("http://13.230.142.157:8080/a/data/장류-조미료-가루류");
         sideDishClient.getData("http://13.230.142.157:8080/a/data/반찬");
-        sauceClient.getData("http://13.230.142.157:8080/a/data/잼-드레싱-소스");
-        etcClient.getData("http://13.230.142.157:8080/a/data/기타요리");
+        sauceClient.getData("http://13.230.142.157:8080/a/data/ 잼-드레싱-소스");
+        etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
 
 
 

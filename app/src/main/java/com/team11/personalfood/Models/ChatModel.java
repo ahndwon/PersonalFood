@@ -1,5 +1,7 @@
 package com.team11.personalfood.Models;
 
+import android.util.Log;
+
 import com.team11.personalfood.Utilities.OnChatLoadListener;
 
 
@@ -11,19 +13,25 @@ import java.util.List;
  */
 
 public class ChatModel {
+    private static final String TAG = "ChatModel";
+
     private List<Chat> chatList = new ArrayList<>();
     private OnChatLoadListener onChatLoadListener;
+    private String userId;
+    private String type;
+    private String message;
+
 
     public void setOnChatLoadListener(OnChatLoadListener onChatLoadListener){
         this.onChatLoadListener = onChatLoadListener;
     }
 
     public ChatModel(){
-        init();
+
     }
 
     private void init(){
-        chatList.add(new Chat("영일중안동원", "태음인", "태음인나와라~~!", 0101));
+//        chatList.add(new Chat("영일중안동원", "태음인", "태음인나와라~~!"));
 
     }
 
@@ -31,5 +39,9 @@ public class ChatModel {
         if(onChatLoadListener != null){
             onChatLoadListener.onFetchChat(chatList);
         }
+    }
+    public void addChat(String userId, String type, String message){
+        chatList.add(new Chat(userId,type,message));
+        Log.d(TAG,"chatList - " + chatList);
     }
 }

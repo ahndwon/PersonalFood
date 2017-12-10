@@ -5,25 +5,23 @@ package com.team11.personalfood.Models;
  */
 
 public class Chat {
-    public String userName;
+    public String userId;
     public String userType;
     public String message;
-    public long time;
 
-    public Chat(String name, String type, String message, long time) {
-        this.userName = name;
+
+    public Chat(String name, String type, String message) {
+        this.userId = name;
         this.userType = type;
         this.message = message;
-        this.time = time;
-
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserType() {
@@ -42,11 +40,5 @@ public class Chat {
         this.message = message;
     }
 
-    public long getTime() {
-        return time;
-    }
 
-    public void setTime(long time) {
-        this.time = time;
-    }
 }

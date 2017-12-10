@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -24,23 +26,36 @@ import android.widget.ToggleButton;
 import com.team11.personalfood.Models.Chat;
 import com.team11.personalfood.Models.ChatModel;
 import com.team11.personalfood.Models.Food;
+import com.team11.personalfood.Utilities.ChatClient;
 import com.team11.personalfood.Utilities.ChatListRecyclerAdapter;
+import com.team11.personalfood.Utilities.Client;
 import com.team11.personalfood.Utilities.FoodListRecyclerAdapter;
 import com.team11.personalfood.Utilities.OnChatLoadListener;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     private static final String TAG = "ChatActivity";
 
+    //View
     private ImageButton filterBtn;
     private ToggleButton toggleTaeyangBtn;
     private ToggleButton toggleTaeeumBtn;
     private ToggleButton toggleSoyangBtn;
     private ToggleButton toggleSoeumBtn;
+    private Button sendMessageBtn;
+
     private RecyclerView chatListRecyclerView;
     private ChatListRecyclerAdapter adapter;
+    private EditText fieldMessage;
+
+    private Client chatClient;
+    private ChatClient chatClientClient;
     private ChatModel chatModel;
+    private String myID = "JJANgGU";
+    private String myType = "태음인";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +63,26 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         setContentView(R.layout.activity_chat);
 
         filterBtn = findViewById(R.id.filter_button);
+        sendMessageBtn = findViewById(R.id.send_message_btn);
+        fieldMessage = findViewById(R.id.field_message);
         chatListRecyclerView = findViewById(R.id.chatList_recyclerView);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
         setSupportActionBar(toolbar);
+        chatClientClient = new ChatClient();
+        try {
+            chatClientClient.connect();
+            chatClientClient.setMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
 
+        }
         setUpChatListView();
         chatModel = new ChatModel();
-        chatModel.setOnChatLoadListener(this);
-        chatModel.fetchChat();
+        chatClient = new Client(this);
+//        chatModel.setOnChatLoadListener(this);
+//        chatModel.fetchChat();
 
         //팝업 토글 온클릭
         ImageButton.OnClickListener onClickListener = view -> {
@@ -91,6 +116,19 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                     break;
             }
         };
+
+        sendMessageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"sendBtn Clicked");
+
+//                setMyChat();
+                chatModel.addChat(myID,myType, fieldMessage.getText().toString());
+                setMyChat();
+                chatModel.fetchChat();
+                chatClient.startSendMessage(myID,myType,fieldMessage.getText().toString());
+            }
+        });
 
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -143,7 +181,17 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         adapter.notifyDataSetChanged();
     }
 
-
+//    public void setChat() {
+//        chatModel = new ChatModel();
+//        chatModel.setOnChatLoadListener(this);
+//        chatModel.fetchChat();
+//    }
+    public void setMyChat() {
+//        chatModel = new ChatModel();
+        chatModel.setOnChatLoadListener(this);
+//        chatModel.fetchChat();
+//        Log.d(TAG,"fieldMessage.getText().toString()" + fieldMessage.getText().toString());
+    }
 
 
 }

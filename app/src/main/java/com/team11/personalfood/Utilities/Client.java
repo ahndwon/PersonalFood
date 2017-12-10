@@ -50,9 +50,11 @@ public class Client {
 
     private LoginData loginData;
     private InsertData insertData;
+    private ChatData chatData;
     private Context mContext;
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
+
 
     public Client(Context context) {
         this.mContext = context;
@@ -499,10 +501,6 @@ public class Client {
                 String negIngredient = item.getString(TAG_NEGATIVE_INGREDIENT);
                 String posIngredient = item.getString(TAG_POSITIVE_INGREDIENT);
 
-
-
-                //여기서 재료와 체질 비교하는 코드 집어넣기
-
                 HashMap<String, String> hashMap = new HashMap<>();
 
                 hashMap.put(TAG_NEGATIVE_INGREDIENT, negIngredient);
@@ -532,7 +530,11 @@ public class Client {
     public void startSignup(String userId,String password,String name,String birth, String userType) {
         insertData = new InsertData();
         insertData.execute(userId, password, name, birth, userType);
+    }
 
+    public void startSendMessage(String userId,String type, String message) {
+        chatData = new ChatData();
+        chatData.execute(userId,type,message);
     }
 
     public String getUserId() {
@@ -541,5 +543,148 @@ public class Client {
 
     public String getPassword() {
         return password;
+    }
+
+
+    public class ChatData extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(mContext,
+                    "Please Wait", null, true, true);
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+
+            Log.d(TAG, "POST response  - " + result);
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            String userID = params[0];
+//            String password = params[1];
+//            String name = params[2];
+//            String birth = params[3];
+//            String type = params[4];
+
+            String userID = "dongwonS2";
+            String protocol = "message";
+            String type = "태음인";
+            String message = "회원가입 왜 안되냐";
+
+
+            String serverURL = "http://13.230.142.157:8081";
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+//                httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//                httpURLConnection.setRequestProperty("content-type", "application/json");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+
+                httpURLConnection.setRequestProperty("Accept", "application/json");
+//                httpURLConnection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
+//                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.connect();
+
+                JSONObject jsonParam = new JSONObject();
+//                jsonParam.put("UserID","'"+ params[0]+"'");
+//                jsonParam.put("Password", "'"+ params[1]+"'");
+//                jsonParam.put("Name", "'"+ params[2]+"'");
+//                jsonParam.put("Birth", "'"+ convertedDate+"'");
+//                jsonParam.put("Type", "'"+ params[4]+"'");
+
+                jsonParam.put("userID", userID);
+                jsonParam.put("protocol", protocol);
+                jsonParam.put("type", type);
+                jsonParam.put("message", message);
+
+
+//                Log.d(TAG, params[0]);
+//                Log.d(TAG, params[1]);
+//                Log.d(TAG, params[2]);
+//                Log.d(TAG, params[3]);
+//                Log.d(TAG, params[4]);
+
+//                OutputStream outputStream = httpURLConnection.getOutputStream();
+                DataOutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+//                outputStream.write(jsonParam.toString().getBytes("UTF-8"));
+//                outputStream.writeBytes("[" + jsonParam.toString() + "]");
+                outputStream.writeBytes(jsonParam.toString());
+//                outputStream.writeBytes("[form:"+jsonParam.toString()+"]");
+//                outputStream.writeBytes("["+"form:"+"{" + "'userID':"+"'personal'"+","+"'password':"+"'123456'"+
+//                        ","+"'name':"+"'name'"+","+"'birth':"+"'2017-12-19'"+","+"'type':"+"'태음인'" + "}]");
+//                outputStream.writeBytes("[{" + "\"userID\":"+"'personal'"+","+"\"password\":"+"'123456'"+
+//                        ","+"\"name\":"+"'name'"+","+"\"birth\":"+"'2017-12-19'"+","+"\"type\":"+"'태음인'" + "}]");
+
+                outputStream.flush();
+                outputStream.close();
+
+
+                //LOG 찍어보기
+                Log.d(TAG, "JSON - "  + jsonParam.toString());
+//                Log.d(TAG, "JSON - " + "[" + jsonParam.toString() + "]");
+//                Log.d(TAG, "JSON - " + "["+"form:"+"{" + "'userID':"+"'personal'"+","+"'password':"+"'123456'"+
+//                        ","+"'name':"+"'name'"+","+"'birth':"+"'2017-12-19'"+","+"'type':"+"'태음인'" + "}]");
+
+//                Log.d(TAG, "[{" + "'userID':"+"'personal'"+","+"'password':"+"'123456'"+
+//                        ","+"'name':"+"'name'"+","+"'birth':"+"'2017-12-19'"+","+"'type':"+"'태음인'" + "}]");
+//                Log.d(TAG, "[{" + "\"userID\":"+"'personal'"+","+"\"password\":"+"'123456'"+
+//                        ","+"\"name\":"+"'name'"+","+"\"birth\":"+"'2017-12-19'"+","+"\"type\":"+"'태음인'" + "}]");
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d(TAG, "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+
+                bufferedReader.close();
+
+
+                return sb.toString();
+
+
+            } catch (Exception e) {
+
+                Log.d(TAG, "InsertData: Error ", e);
+
+                return new String("Error: " + e.getMessage());
+            }
+
+        }
     }
 }

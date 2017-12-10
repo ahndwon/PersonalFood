@@ -59,7 +59,7 @@
                     app:srcCompat="@drawable/vecter_plus" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/field_message"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -72,6 +72,7 @@
                     android:text="text" />
 
                 <Button
+                    android:id="@+id/send_message_btn"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
