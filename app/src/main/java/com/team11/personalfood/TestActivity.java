@@ -96,8 +96,6 @@ public class TestActivity extends BaseActivity {
                     resultTest();
                 }else
                     updateQuestion();
-
-
             }
         });
 

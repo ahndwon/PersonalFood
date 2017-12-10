@@ -37,7 +37,10 @@ public class ResultActivity extends BaseActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ResultActivity.this, ListActivity.class);
+                Intent intent = new Intent(ResultActivity.this, SignupActivity.class);
+                int type = getIntent().getIntExtra("Type", 0);
+
+                intent.putExtra("Type", type);
                 startActivity(intent);
             }
         });

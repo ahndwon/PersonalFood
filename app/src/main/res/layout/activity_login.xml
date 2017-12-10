@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="ID"
-                android:id="@+id/input_email"/>
+                android:id="@+id/field_login_id"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="Password"
-                android:id="@+id/input_password"/>
+                android:id="@+id/field_login_password"/>
 
         </android.support.design.widget.TextInputLayout>
 
