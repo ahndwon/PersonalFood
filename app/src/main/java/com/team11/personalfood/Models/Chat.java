@@ -10,6 +10,9 @@ public class Chat {
     public String message;
 
 
+    public String messageType;
+
+
     public Chat(String name, String type, String message) {
         this.userId = name;
         this.userType = type;
@@ -40,5 +43,11 @@ public class Chat {
         this.message = message;
     }
 
+    public String getMessageType() {
+        return messageType;
+    }
 
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
+    }
 }

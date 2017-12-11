@@ -1,15 +1,15 @@
 package com.team11.personalfood;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -25,18 +24,21 @@ import android.widget.ToggleButton;
 
 import com.team11.personalfood.Models.Chat;
 import com.team11.personalfood.Models.ChatModel;
-import com.team11.personalfood.Models.Food;
 import com.team11.personalfood.Utilities.ChatClient;
 import com.team11.personalfood.Utilities.ChatListRecyclerAdapter;
 import com.team11.personalfood.Utilities.Client;
-import com.team11.personalfood.Utilities.FoodListRecyclerAdapter;
 import com.team11.personalfood.Utilities.OnChatLoadListener;
 
 import java.io.IOException;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     private static final String TAG = "ChatActivity";
+
+
 
     //View
     private ImageButton filterBtn;
@@ -44,14 +46,19 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     private ToggleButton toggleTaeeumBtn;
     private ToggleButton toggleSoyangBtn;
     private ToggleButton toggleSoeumBtn;
+
+    @BindView(R.id.send_message_btn)
     private Button sendMessageBtn;
 
-    private RecyclerView chatListRecyclerView;
-    private ChatListRecyclerAdapter adapter;
-    private EditText fieldMessage;
 
-    private Client chatClient;
-    private ChatClient chatClientClient;
+    @BindView(R.id.chatList_recyclerView)
+    RecyclerView chatListRecyclerView;
+    private ChatListRecyclerAdapter adapter;
+    @BindView(R.id.field_message)
+    AppCompatEditText fieldMessage;
+
+    private Client client;
+    private ChatClient chatClient;
     private ChatModel chatModel;
     private String myID = "JJANgGU";
     private String myType = "태음인";
@@ -67,14 +74,16 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         fieldMessage = findViewById(R.id.field_message);
         chatListRecyclerView = findViewById(R.id.chatList_recyclerView);
 
+        setUpChatListView();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
         setSupportActionBar(toolbar);
 
+//        communicator = new Communicator(this);
 //        connectChatServer();
-        setUpChatListView();
         chatModel = new ChatModel();
-        chatClient = new Client(this);
+//        client = new Client(this);
         chatModel.setOnChatLoadListener(this);
 //        chatModel.fetchChat();
 
@@ -111,38 +120,63 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
             }
         };
 
+
         sendMessageBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"sendBtn Clicked");
 
-//                setMyChat();
-                chatModel.addChat(myID,myType, fieldMessage.getText().toString());
-//                setMyChat();
-                chatModel.fetchChat();
-                chatClient.startSendMessage(myID,myType,fieldMessage.getText().toString());
+
+                Log.d(TAG, "sendBtn Clicked");
+
+                if (chatClient.getDos() != null) {
+                    Log.d(TAG, " - DOS NOT NULL -" + chatClient.getDos());
+                    try {
+                        chatClient.setMessage(myID, myType, fieldMessage.getText().toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                chatModel.addChat(myID, myType, fieldMessage.getText().toString());
+                fieldMessage.setText("");
+
             }
         });
 
-        if(getSupportActionBar()!=null){
+        if (
+
+                getSupportActionBar() != null)
+
+        {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
+
+        getSupportActionBar().
+
+                setHomeAsUpIndicator(R.drawable.leftarrow);
 
         filterBtn.setOnClickListener(onClickListener);
 
-        new Thread() {
-            public void run() {
-                try {
-                    chatClientClient = new ChatClient();
-                    chatClientClient.connect();
-                    chatClientClient.setMessage();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        //chatClient Thread
+        new
 
-                }
-            }
-        }.start();
+                Thread() {
+                    public void run() {
+                        try {
+                            chatClient = new ChatClient();
+                            chatClient.connect();
+                            if (chatClient.getDos() != null) {
+                                Log.d(TAG, " - DOS NOT NULL -" + chatClient.getDos());
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
+                }.
+
+                start();
 
 
     }
@@ -152,7 +186,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     public static void dimBehind(PopupWindow popupWindow) {
         View container;
         if (popupWindow.getBackground() == null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 container = (View) popupWindow.getContentView().getParent();
             } else {
                 container = popupWindow.getContentView();
@@ -172,7 +206,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         wm.updateViewLayout(container, p);
     }
 
-    private void setUpChatListView(){
+    private void setUpChatListView() {
         LinearLayoutManager manager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
         chatListRecyclerView.setLayoutManager(manager);
 
@@ -184,30 +218,9 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 
     @Override
     public void onFetchChat(List<Chat> chatList) {
+
         adapter.setItems(chatList);
         adapter.notifyDataSetChanged();
-    }
-
-//    public void setChat() {
-//        chatModel = new ChatModel();
-//        chatModel.setOnChatLoadListener(this);
-//        chatModel.fetchChat();
-//    }
-    public void setMyChat() {
-//        chatModel = new ChatModel();
-        chatModel.setOnChatLoadListener(this);
-//        chatModel.fetchChat();
-//        Log.d(TAG,"fieldMessage.getText().toString()" + fieldMessage.getText().toString());
-    }
-
-    public void connectChatServer(){
-        try {
-            chatClientClient.connect();
-            chatClientClient.setMessage();
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
     }
 
 }

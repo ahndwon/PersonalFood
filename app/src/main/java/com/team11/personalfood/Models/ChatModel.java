@@ -27,24 +27,36 @@ public class ChatModel {
     }
 
     public ChatModel(){
-        chatList = new ArrayList<>();
+        init();
     }
 
     private void init(){
 //        chatList.add(new Chat("영일중안동원", "태음인", "태음인나와라~~!"));
+        chatList = new ArrayList<>();
+        System.out.println("asdf");
 
     }
 
     public void fetchChat(){
+        List<Chat> mChatList = new ArrayList<>();
+        mChatList = chatList;
+
         if(onChatLoadListener != null){
-            onChatLoadListener.onFetchChat(chatList);
+            onChatLoadListener.onFetchChat(mChatList);
         }
     }
     public void addChat(String userId, String type, String message){
-        chatList.add(new Chat(userId,type,message));
-        for(int i = 0; i<chatList.size(); i++){
-            Log.d(TAG,"chatList - "+i +" chat-  "+ chatList.get(i));
-        }
+//        chatList = new ArrayList<>();
+        Chat mChat = new Chat(userId,type,message);
+        chatList.add(mChat);
+        System.out.println(chatList.size());
+        printChat();
+        fetchChat();
 
+    }
+    public void printChat(){
+        for(int i = 0; i<chatList.size(); i++){
+            Log.d(TAG,"chatList - "+ i +" chat - "+ chatList.get(i).getMessage() + " size - " + chatList.size());
+        }
     }
 }

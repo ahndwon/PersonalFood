@@ -58,7 +58,7 @@
                     android:padding="5dp"
                     app:srcCompat="@drawable/vecter_plus" />
 
-                <EditText
+                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/field_message"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -71,7 +71,7 @@
                     android:paddingStart="10dp"
                     android:text="text" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/send_message_btn"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"

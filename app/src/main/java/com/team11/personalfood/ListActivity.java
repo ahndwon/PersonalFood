@@ -14,8 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.team11.personalfood.Models.CurrentUser;
 import com.team11.personalfood.Models.Food;
 import com.team11.personalfood.Models.FoodModel;
+import com.team11.personalfood.Post.Communicator;
 import com.team11.personalfood.Utilities.Client;
 import com.team11.personalfood.Utilities.FoodListRecyclerAdapter;
 import com.team11.personalfood.Utilities.OnFoodLoadListener;
@@ -30,9 +32,9 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private static final String TAG = "ListActivity";
     private static final String TAG_CATEGORY = "Category";
     private static final String TAG_FOOD_NAME = "Food_Name";
-    private static final String TAG_INGREDIENT ="Ingredient";
-    private static final String TAG_POSITIVE_INGREDIENT ="Positive_Ingredient";
-    private static final String TAG_NEGATIVE_INGREDIENT ="Negative_Ingredient";
+    private static final String TAG_INGREDIENT = "Ingredient";
+    private static final String TAG_POSITIVE_INGREDIENT = "Positive_Ingredient";
+    private static final String TAG_NEGATIVE_INGREDIENT = "Negative_Ingredient";
 
     private RecyclerView foodListRecyclerView;
     private EditText searchEditText;
@@ -67,6 +69,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private Client sauceClient;
     private Client etcClient;
 
+    private String currentUserType;
 
 
     private ArrayList<HashMap<String, String>> mArrayList;
@@ -95,18 +98,16 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sauceCategoryBtn = findViewById(R.id.sauceCategory_button);
         etcCategoryBtn = findViewById(R.id.etcCategory_button);
 
-        BtnOnClickListener btnOnClickListener = new BtnOnClickListener() ;
-//        soupClient = new Client("http://13.230.142.157:8080/a/data/국물요리");
-//        sideDishClient= new Client("http://13.230.142.157:8080/a/data/반찬");
+        BtnOnClickListener btnOnClickListener = new BtnOnClickListener();
 
         typeClient = new Client(this);
         allCategoryClient = new Client(this);
-        riceClient= new Client(this);
+        riceClient = new Client(this);
         kimchiClient = new Client(this);
         breadClient = new Client(this);
         noodleClient = new Client(this);
         saladClient = new Client(this);
-        iceCreamClient= new Client(this);
+        iceCreamClient = new Client(this);
         soupClient = new Client(this);
         pizzaClient = new Client(this);
         msgClient = new Client(this);
@@ -114,7 +115,9 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sauceClient = new Client(this);
         etcClient = new Client(this);
 
-
+//        Log.d(TAG,"Communicator.currentUser - " +Communicator.currentUser.getType());
+//        currentUserType = Communicator.currentUser.getType();
+//        typeClient.getData("http://13.230.142.157:8080/a/constitution/" + currentUserType);
         typeClient.getData("http://13.230.142.157:8080/a/constitution/태양인");
         allCategoryClient.getData("http://13.230.142.157:8080/a/data/");
         riceClient.getData("http://13.230.142.157:8080/a/data/밥-죽");
@@ -129,7 +132,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sideDishClient.getData("http://13.230.142.157:8080/a/data/반찬");
         sauceClient.getData("http://13.230.142.157:8080/a/data/잼-드레싱-소스");
         etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
-
 
 
         setUpFoodListView();
@@ -158,7 +160,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sauceCategoryBtn.setOnClickListener(btnOnClickListener);
         etcCategoryBtn.setOnClickListener(btnOnClickListener);
 
-        if(getSupportActionBar()!=null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
@@ -169,21 +171,17 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_chat) {
-            Log.d(TAG,"menu chat button clicked");
+            Log.d(TAG, "menu chat button clicked");
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
             startActivity(intent);
-        }
-
-        else if (id == R.id.menu_back) {
-            Log.d(TAG,"menu back button clicked");
+        } else if (id == R.id.menu_back) {
+            Log.d(TAG, "menu back button clicked");
             Activity activity = getParent();
             activity.onBackPressed();
         }
 
-
         return super.onOptionsItemSelected(item);
     }
-
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -192,7 +190,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setUpFoodListView(){
+    private void setUpFoodListView() {
         LinearLayoutManager manager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
         foodListRecyclerView.setLayoutManager(manager);
         adapter = new FoodListRecyclerAdapter();
@@ -209,72 +207,72 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.riceCategory_button :
-                    Log.d(TAG,"riceCategoryBtn Clicked");
+                case R.id.riceCategory_button:
+                    Log.d(TAG, "riceCategoryBtn Clicked");
                     mArrayList = riceClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.kimchiCategory_button :
-                    Log.d(TAG,"kimchiCategoryBtn Clicked");
+                    break;
+                case R.id.kimchiCategory_button:
+                    Log.d(TAG, "kimchiCategoryBtn Clicked");
                     mArrayList = kimchiClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.breadCategory_button :
-                    Log.d(TAG,"breadCategoryBtn Clicked");
+                    break;
+                case R.id.breadCategory_button:
+                    Log.d(TAG, "breadCategoryBtn Clicked");
                     mArrayList = breadClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.noodleCategory_button :
-                    Log.d(TAG,"noodleCategoryBtn Clicked");
+                    break;
+                case R.id.noodleCategory_button:
+                    Log.d(TAG, "noodleCategoryBtn Clicked");
                     mArrayList = noodleClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.saladCategory_button :
-                    Log.d(TAG,"saladCategoryBtn Clicked");
+                    break;
+                case R.id.saladCategory_button:
+                    Log.d(TAG, "saladCategoryBtn Clicked");
                     mArrayList = saladClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.iceCreamCategory_button :
-                    Log.d(TAG,"iceCreamCategoryBtn Clicked");
+                    break;
+                case R.id.iceCreamCategory_button:
+                    Log.d(TAG, "iceCreamCategoryBtn Clicked");
                     mArrayList = iceCreamClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.soupCategory_button :
-                    Log.d(TAG,"soupCategoryBtn Clicked");
+                    break;
+                case R.id.soupCategory_button:
+                    Log.d(TAG, "soupCategoryBtn Clicked");
                     mArrayList = soupClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.pizzaCategory_button :
-                    Log.d(TAG,"pizzaCategoryBtn Clicked");
+                    break;
+                case R.id.pizzaCategory_button:
+                    Log.d(TAG, "pizzaCategoryBtn Clicked");
                     mArrayList = pizzaClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.msgCategory_button :
-                    Log.d(TAG,"msgCategoryBtn Clicked");
+                    break;
+                case R.id.msgCategory_button:
+                    Log.d(TAG, "msgCategoryBtn Clicked");
                     mArrayList = msgClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.sideDishCategory_button :
-                    Log.d(TAG,"sideDishCategoryBtn Clicked");
+                    break;
+                case R.id.sideDishCategory_button:
+                    Log.d(TAG, "sideDishCategoryBtn Clicked");
                     mArrayList = sideDishClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.sauceCategory_button :
-                    Log.d(TAG,"sauceCategoryBtn Clicked");
+                    break;
+                case R.id.sauceCategory_button:
+                    Log.d(TAG, "sauceCategoryBtn Clicked");
                     mArrayList = sauceClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
-                case R.id.etcCategory_button :
-                    Log.d(TAG,"etcCategoryBtn Clicked");
+                    break;
+                case R.id.etcCategory_button:
+                    Log.d(TAG, "etcCategoryBtn Clicked");
                     mArrayList = etcClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
-                    break ;
+                    break;
             }
         }
     }
 
     public void setFood() {
-        foodModel = new FoodModel(mArrayList,TAG_FOOD_NAME, TAG_POSITIVE_INGREDIENT,TAG_NEGATIVE_INGREDIENT);
+        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME, TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
         foodModel.setOnFoodLoadListener(this);
         foodModel.fetchFood();
     }

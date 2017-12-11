@@ -3,6 +3,8 @@ package com.team11.personalfood.Utilities;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
+import com.team11.personalfood.Models.Chat;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +50,12 @@ public abstract class AbstractRecyclerAdapter<T> extends RecyclerView.Adapter<Ab
         this.items.clear();
         this.items = items;
     }
+
+//    public void setItems(@NonNull Chat chat) {
+//        this.items.clear();
+//        this.items = items;
+//    }
+
 
     public void clear() {
         this.items.clear();

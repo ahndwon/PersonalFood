@@ -652,7 +652,7 @@ public class Client {
 //                        ","+"\"name\":"+"'name'"+","+"\"birth\":"+"'2017-12-19'"+","+"\"type\":"+"'태음인'" + "}]");
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d(TAG, "POST response code - " + responseStatusCode);
+                Log.d(TAG, "ChatData response code - " + responseStatusCode);
 
                 InputStream inputStream;
                 if(responseStatusCode == HttpURLConnection.HTTP_OK) {
