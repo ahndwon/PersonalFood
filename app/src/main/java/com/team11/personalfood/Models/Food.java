@@ -28,25 +28,4 @@ public class Food {
     public String getPositiveIngredient() {
         return positiveIngredient;
     }
-    //    public String getIngredient() {
-//        return ingredient;
-//    }
-
-
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
-    }
-
-    public void setNegativeIngredient(String negativeIngredient) {
-        this.negativeIngredient = negativeIngredient;
-    }
-
-    public void setPositiveIngredient(String positiveIngredient) {
-        this.positiveIngredient = positiveIngredient;
-    }
-
-
-    //    public void setIngredient(String ingredient) {
-//        this.ingredient = ingredient;
-//    }
 }

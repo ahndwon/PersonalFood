@@ -15,10 +15,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 
-/**
- * Created by DongWon on 2017-12-11.
- */
-
 interface ReaderListener {
     void onTurnChange(String message);
 

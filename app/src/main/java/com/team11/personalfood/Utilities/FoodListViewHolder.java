@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 import com.team11.personalfood.ListActivity;
 import com.team11.personalfood.Models.Food;
@@ -20,7 +19,6 @@ class FoodListViewHolder extends AbstractViewHolder<Food> {
     private TextView negativeIngredient;
     private TextView positiveIngredient;
     private ImageView foodImage;
-    private ImageLoader imageLoader;
 
     public FoodListViewHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_food, parent, false));

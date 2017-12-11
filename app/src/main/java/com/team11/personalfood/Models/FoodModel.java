@@ -11,13 +11,12 @@ public class FoodModel {
     private List<Food> foodList = new ArrayList<>();
     private OnFoodLoadListener onFoodLoadListener;
 
-
-    public FoodModel(ArrayList<HashMap<String, String>> mArrayList) {
+    public FoodModel(ArrayList<HashMap<String,String>> mArrayList) {
 
     }
 
-    public FoodModel(ArrayList<HashMap<String, String>> mArrayList, String tagFoodName, String tagFoodUrl, String tagNegativeIngredient, String tagPositiveIngredient) {
-        for (HashMap hashMap : mArrayList) {
+    public FoodModel(ArrayList<HashMap<String, String>> mArrayList, String tagFoodName, String tagNegativeIngredient, String tagPositiveIngredient) {
+        for(HashMap hashMap : mArrayList) {
             foodList.add(new Food(hashMap.get(tagFoodName).toString(),
                     hashMap.get(tagFoodUrl).toString(),
                     hashMap.get(tagNegativeIngredient).toString(),
@@ -25,28 +24,13 @@ public class FoodModel {
         }
     }
 
-    public void setOnFoodLoadListener(OnFoodLoadListener onFoodLoadListener) {
+    public void setOnFoodLoadListener(OnFoodLoadListener onFoodLoadListener){
         this.onFoodLoadListener = onFoodLoadListener;
     }
 
-    public FoodModel() {
-        init();
-    }
 
-    public FoodModel(List<Food> foodList) {
-        this.foodList = foodList;
-    }
-
-    ;
-
-
-    private void init() {
-
-
-    }
-
-    public void fetchFood() {
-        if (onFoodLoadListener != null) {
+    public void fetchFood(){
+        if(onFoodLoadListener != null){
             onFoodLoadListener.onFetchFood(foodList);
         }
     }

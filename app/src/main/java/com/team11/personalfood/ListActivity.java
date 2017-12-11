@@ -121,9 +121,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sauceClient = new Client(this);
         etcClient = new Client(this);
 
-//        Log.d(TAG,"Communicator.currentUser - " +Communicator.currentUser.getType());
-//        currentUserType = Communicator.currentUser.getType();
-//        typeClient.getData("http://13.230.142.157:8080/a/constitution/" + currentUserType);
+
         typeClient.getData("http://13.230.142.157:8080/a/constitution/태양인");
         allCategoryClient.getData("http://13.230.142.157:8080/a/data/");
         riceClient.getData("http://13.230.142.157:8080/a/data/밥-죽");
@@ -141,17 +139,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
 
 
         setUpFoodListView();
-//        mArrayList = allCategoryClient.getFoodResult();
-//        setFood();
-
-//        mArrayList = allCategoryClient.getFoodResult();
-//        setFood();
-//        foodModel = new FoodModel();
-//        foodModel.setOnFoodLoadListener(this);
-//        foodModel.fetchFood();
-
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
 
         riceCategoryBtn.setOnClickListener(btnOnClickListener);
         kimchiCategoryBtn.setOnClickListener(btnOnClickListener);
@@ -170,7 +157,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
-
 
     }
 
@@ -203,7 +189,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         adapter = new FoodListRecyclerAdapter();
         foodListRecyclerView.setAdapter(adapter);
     }
-
 
     @Override
     public void onFetchFood(List<Food> foodList) {
@@ -280,7 +265,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     }
 
     public void setFood() {
-        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME,TAG_FOOD_URL,  TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
+        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME, TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
         foodModel.setOnFoodLoadListener(this);
         foodModel.fetchFood();
     }

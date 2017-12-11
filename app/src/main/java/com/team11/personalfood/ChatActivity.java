@@ -85,7 +85,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         chatModel = new ChatModel();
 //        client = new Client(this);
         chatModel.setOnChatLoadListener(this);
-//        chatModel.fetchChat();
+        chatModel.fetchChat();
 
         //팝업 토글 온클릭
         ImageButton.OnClickListener onClickListener = view -> {
@@ -137,31 +137,23 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                         e.printStackTrace();
                     }
                 }
-
-                chatModel.addChat(myID, myType, fieldMessage.getText().toString());
+                Chat chat = new Chat(myID, myType, fieldMessage.getText().toString());
+                adapter.addItem(chat);
                 fieldMessage.setText("");
 
             }
         });
 
-        if (
-
-                getSupportActionBar() != null)
-
-        {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        getSupportActionBar().
-
-                setHomeAsUpIndicator(R.drawable.leftarrow);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
         filterBtn.setOnClickListener(onClickListener);
 
         //chatClient Thread
-        new
-
-                Thread() {
+        new Thread() {
                     public void run() {
                         try {
                             chatClient = new ChatClient();
@@ -174,11 +166,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 
                         }
                     }
-                }.
-
-                start();
-
-
+                }.start();
     }
 
 
