@@ -1,6 +1,7 @@
 package com.team11.personalfood;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.team11.personalfood.Models.Chat;
@@ -28,6 +30,8 @@ import com.team11.personalfood.Utilities.ChatClient;
 import com.team11.personalfood.Utilities.ChatListRecyclerAdapter;
 import com.team11.personalfood.Utilities.Client;
 import com.team11.personalfood.Utilities.OnChatLoadListener;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -97,6 +101,17 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                     LayoutInflater inflater = (LayoutInflater)
                             getSystemService(LAYOUT_INFLATER_SERVICE);
                     View popupView = inflater.inflate(R.layout.popup_toggle, null);
+
+                    TextView taeyangText = popupView.findViewById(R.id.toggle_taeyang_text);
+                    TextView taeeumText = popupView.findViewById(R.id.toggle_taeeum_text);
+                    TextView soyangText = popupView.findViewById(R.id.toggle_soyang_text);
+                    TextView soeumText = popupView.findViewById(R.id.toggle_soeum_text);
+
+                    Typeface typeface = Typeface.createFromAsset(popupView.getContext().getAssets(), "210 직장인의한마디R.ttf");
+                    taeyangText.setTypeface(typeface);
+                    taeeumText.setTypeface(typeface);
+                    soyangText.setTypeface(typeface);
+                    soeumText.setTypeface(typeface);
 
                     // create the popup window
                     int width = LinearLayout.LayoutParams.WRAP_CONTENT;

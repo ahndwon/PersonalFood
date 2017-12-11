@@ -3,6 +3,7 @@ package com.team11.personalfood.Utilities;
 import android.util.Log;
 
 import com.team11.personalfood.Models.Chat;
+import com.team11.personalfood.Post.Communicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
