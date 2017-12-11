@@ -7,9 +7,11 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="3dp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:padding="0dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/toggle_taeyang_text"
@@ -26,7 +28,7 @@
             android:id="@+id/toggle_taeyang"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/check"
             android:focusable="false"
@@ -36,7 +38,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="3dp"
         android:layout_width="200dp"
+        android:padding="5dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -53,7 +58,7 @@
             android:id="@+id/toggle_taeeum"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/check"
             android:focusable="false"
@@ -63,7 +68,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="3dp"
         android:layout_width="200dp"
+        android:padding="5dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -80,7 +88,7 @@
             android:id="@+id/toggle_soyang"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/check"
             android:focusable="false"
@@ -90,7 +98,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="3dp"
         android:layout_width="200dp"
+        android:padding="5dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -107,7 +118,7 @@
             android:id="@+id/toggle_soeum"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
             android:background="@drawable/check"
             android:focusable="false"
