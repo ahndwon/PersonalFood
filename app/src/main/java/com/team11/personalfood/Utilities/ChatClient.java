@@ -93,9 +93,22 @@ public class ChatClient {
     private ReaderThread readerThread;
 
     public void connect() throws IOException {
-        this.socket = new Socket("13.230.142.157", 8081);
-        this.os = socket.getOutputStream();
-        this.dos = new DataOutputStream(os);
+
+        new Thread() {
+            public void run() {
+                try{
+                    socket = new Socket("13.230.142.157", 8081);
+                    os = socket.getOutputStream();
+                    dos = new DataOutputStream(os);
+
+                } catch(IOException e){
+                    e.printStackTrace();
+
+                }
+            }
+        }.start();
+
+
     }
     public void setMessage() throws IOException {
         String message = "[{"+"userID:"+"dongwonS2"+","+"protocol:"+"message"+","+

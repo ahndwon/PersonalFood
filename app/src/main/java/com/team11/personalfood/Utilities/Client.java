@@ -194,7 +194,7 @@ public class Client {
 //            String type = params[4];
 
             String serverURL = "http://13.230.142.157:8080/a/users/login/";
-            
+
 
 //            Log.d(TAG, "UserID=" + "dongwonS2" + "&Password=" + "123456");
             try {
@@ -206,17 +206,18 @@ public class Client {
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                //httpURLConnection.setRequestProperty("content-type", "application/json");
+//                httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//                httpURLConnection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
+//                httpURLConnection.setRequestProperty("content-type", "application/json");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                 httpURLConnection.setRequestProperty("Accept", "application/json");
-//                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.connect();
 
                 JSONObject jsonParam = new JSONObject();
-                jsonParam.put("userID", "dongwonS2");
-                jsonParam.put("password", "123456");
+                jsonParam.put("UserID", "dongwonS2");
+                jsonParam.put("Password", "123456");
                 Log.d(TAG,"jsonParam - " + "[" + jsonParam.toString() + "]");
 
 //                OutputStream outputStream = httpURLConnection.getOutputStream();
@@ -224,7 +225,9 @@ public class Client {
 
 //                outputStream.write(postParameters.getBytes("UTF-8"));
 //                outputStream.write(outputStream.toString().getBytes("UTF-8"));
+//                outputStream.writeBytes(jsonParam.toString());
                 outputStream.writeBytes("[" + jsonParam.toString() + "]");
+//                outputStream.writeBytes("["+"form:" + jsonParam.toString() + "]");
                 outputStream.flush();
                 outputStream.close();
 

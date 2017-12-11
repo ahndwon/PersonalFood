@@ -70,18 +70,12 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
         setSupportActionBar(toolbar);
-        chatClientClient = new ChatClient();
-        try {
-            chatClientClient.connect();
-            chatClientClient.setMessage();
-        } catch (IOException e) {
-            e.printStackTrace();
 
-        }
+//        connectChatServer();
         setUpChatListView();
         chatModel = new ChatModel();
         chatClient = new Client(this);
-//        chatModel.setOnChatLoadListener(this);
+        chatModel.setOnChatLoadListener(this);
 //        chatModel.fetchChat();
 
         //팝업 토글 온클릭
@@ -124,7 +118,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 
 //                setMyChat();
                 chatModel.addChat(myID,myType, fieldMessage.getText().toString());
-                setMyChat();
+//                setMyChat();
                 chatModel.fetchChat();
                 chatClient.startSendMessage(myID,myType,fieldMessage.getText().toString());
             }
@@ -136,6 +130,19 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
         filterBtn.setOnClickListener(onClickListener);
+
+        new Thread() {
+            public void run() {
+                try {
+                    chatClientClient = new ChatClient();
+                    chatClientClient.connect();
+                    chatClientClient.setMessage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }.start();
 
 
     }
@@ -193,5 +200,14 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 //        Log.d(TAG,"fieldMessage.getText().toString()" + fieldMessage.getText().toString());
     }
 
+    public void connectChatServer(){
+        try {
+            chatClientClient.connect();
+            chatClientClient.setMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
 
 }

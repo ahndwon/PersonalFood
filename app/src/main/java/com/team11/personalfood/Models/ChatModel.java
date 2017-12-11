@@ -15,7 +15,7 @@ import java.util.List;
 public class ChatModel {
     private static final String TAG = "ChatModel";
 
-    private List<Chat> chatList = new ArrayList<>();
+    private List<Chat> chatList;
     private OnChatLoadListener onChatLoadListener;
     private String userId;
     private String type;
@@ -27,7 +27,7 @@ public class ChatModel {
     }
 
     public ChatModel(){
-
+        chatList = new ArrayList<>();
     }
 
     private void init(){
@@ -42,6 +42,9 @@ public class ChatModel {
     }
     public void addChat(String userId, String type, String message){
         chatList.add(new Chat(userId,type,message));
-        Log.d(TAG,"chatList - " + chatList);
+        for(int i = 0; i<chatList.size(); i++){
+            Log.d(TAG,"chatList - "+i +" chat-  "+ chatList.get(i));
+        }
+
     }
 }
