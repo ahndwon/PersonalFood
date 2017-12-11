@@ -22,7 +22,25 @@ public class TestActivity extends BaseActivity {
             new Test(R.string.question1, R.string.answer1_1, R.string.answer1_2, R.string.answer1_3, R.string.answer1_4),
             new Test(R.string.question2, R.string.answer2_1, R.string.answer2_2, R.string.answer2_3, R.string.answer2_4),
             new Test(R.string.question3, R.string.answer3_1, R.string.answer3_2, R.string.answer3_3, R.string.answer3_4),
-            new Test(R.string.question4, R.string.answer4_1, R.string.answer4_2, R.string.answer4_3, R.string.answer4_4)
+            new Test(R.string.question4, R.string.answer4_1, R.string.answer4_2, R.string.answer4_3, R.string.answer4_4),
+            new Test(R.string.question5, R.string.answer5_1, R.string.answer5_2, R.string.answer5_3, R.string.answer5_4),
+            new Test(R.string.question6, R.string.answer6_1, R.string.answer6_2, R.string.answer6_3, R.string.answer6_4),
+            new Test(R.string.question7, R.string.answer7_1, R.string.answer7_2, R.string.answer7_3, R.string.answer7_4),
+            new Test(R.string.question8, R.string.answer8_1, R.string.answer8_2, R.string.answer8_3, R.string.answer8_4),
+            new Test(R.string.question9, R.string.answer9_1, R.string.answer9_2, R.string.answer9_3, R.string.answer9_4),
+            new Test(R.string.question10, R.string.answer10_1, R.string.answer10_2, R.string.answer10_3, R.string.answer10_4),
+            new Test(R.string.question11, R.string.answer11_1, R.string.answer11_2, R.string.answer11_3, R.string.answer11_4),
+            new Test(R.string.question12, R.string.answer12_1, R.string.answer12_2, R.string.answer12_3, R.string.answer12_4),
+            new Test(R.string.question13, R.string.answer13_1, R.string.answer13_2, R.string.answer13_3, R.string.answer13_4),
+            new Test(R.string.question14, R.string.answer14_1, R.string.answer14_2, R.string.answer14_3, R.string.answer14_4),
+            new Test(R.string.question15, R.string.answer15_1, R.string.answer15_2, R.string.answer15_3, R.string.answer15_4),
+            new Test(R.string.question16, R.string.answer16_1, R.string.answer16_2, R.string.answer16_3, R.string.answer16_4),
+            new Test(R.string.question17, R.string.answer17_1, R.string.answer17_2, R.string.answer17_3, R.string.answer17_4),
+            new Test(R.string.question18, R.string.answer18_1, R.string.answer18_2, R.string.answer18_3, R.string.answer18_4),
+            new Test(R.string.question19, R.string.answer19_1, R.string.answer19_2, R.string.answer19_3, R.string.answer19_4),
+            new Test(R.string.question20, R.string.answer20_1, R.string.answer20_2, R.string.answer20_3, R.string.answer20_4),
+            new Test(R.string.question21, R.string.answer21_1, R.string.answer21_2, R.string.answer21_3, R.string.answer21_4),
+            new Test(R.string.question22, R.string.answer22_1, R.string.answer22_2, R.string.answer22_3, R.string.answer22_4),
     };
 
     private int currentQuestion;
@@ -155,6 +173,9 @@ public class TestActivity extends BaseActivity {
         Intent intent = new Intent(TestActivity.this, ResultActivity.class);
         intent.putExtra("Type", type);
         startActivity(intent);
+
+        currentQuestion = 0;
+
     }
 
 }
