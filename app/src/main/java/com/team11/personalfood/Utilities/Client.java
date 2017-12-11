@@ -169,14 +169,14 @@ public class Client {
 
                 for(int j = 0;j<token.length;j++) {
                     for(int k = 0; k<negativeToken.length; k++){
-                        Log.d(TAG, "negative comparing : " + (negativeToken[k]) + "with" +token[j]);
+//                        Log.d(TAG, "negative comparing : " + (negativeToken[k]) + "with" +token[j]);
                         if(token[j].equals(negativeToken[k])){
                             negativeString+=token[j] +", ";
                         }
                     }
 
                     for(int k = 0; k<positiveToken.length; k++){
-                        Log.d(TAG, "positive comparing : " + (positiveToken[k]) + "with" +token[j]);
+//                        Log.d(TAG, "positive comparing : " + (positiveToken[k]) + "with" +token[j]);
                         if(token[j].equals(positiveToken[k])){
                             positiveString+=token[j] +", ";
                         }

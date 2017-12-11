@@ -129,8 +129,8 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 
                 Log.d(TAG, "sendBtn Clicked");
 
-                if (chatClient.getDos() != null) {
-                    Log.d(TAG, " - DOS NOT NULL -" + chatClient.getDos());
+                if (chatClient.getOs() != null) {
+                    Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
                     try {
                         chatClient.setMessage(myID, myType, fieldMessage.getText().toString());
                     } catch (IOException e) {
@@ -139,6 +139,8 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                 }
                 Chat chat = new Chat(myID, myType, fieldMessage.getText().toString());
                 adapter.addItem(chat);
+
+                chatListRecyclerView.scrollToPosition(adapter.getItemCount()-1);
                 fieldMessage.setText("");
 
             }
@@ -155,16 +157,22 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         //chatClient Thread
         new Thread() {
                     public void run() {
-                        try {
-                            chatClient = new ChatClient();
-                            chatClient.connect();
-                            if (chatClient.getDos() != null) {
-                                Log.d(TAG, " - DOS NOT NULL -" + chatClient.getDos());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-
+                        chatClient = new ChatClient();
+                        if (chatClient.getOs() != null) {
+                            Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
                         }
+
+
+//                        try {
+//                            chatClient = new ChatClient();
+//                            chatClient.connect();
+//                            if (chatClient.getOs() != null) {
+//                                Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
+//                            }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//
+//                        }
                     }
                 }.start();
     }

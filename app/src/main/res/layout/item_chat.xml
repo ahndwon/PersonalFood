@@ -5,19 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/chat_cardview"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:cardBackgroundColor="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-
-    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/chatname_textview"
@@ -29,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.13999999"
         tools:text="영일중안동원" />
@@ -42,7 +29,6 @@
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/chat_cardview"
         app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toEndOf="@+id/chatname_textview"
         app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +39,6 @@
         android:id="@+id/chat_message_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
         android:textColor="@color/colorDarkGray"
         android:textSize="18sp"
         android:textStyle="bold"

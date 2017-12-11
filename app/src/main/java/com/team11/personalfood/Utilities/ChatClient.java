@@ -6,8 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,48 +13,22 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 
-interface ReaderListener {
-    void onTurnChange(String message);
-
-    void onUsers(String message);
-
-    void onDraw(String message);
-
-    void onSuccess(String message);
-
-    void onFail(String message);
-
-    void onDisconnect(String message);
-
-    void onRefresh(String message);
+interface OnReaderListener {
+    void onRead(String message);
 
 }
 
 class ReaderThread extends Thread {
     private InputStream is;
-    private DataInputStream dis;
-    private ReaderListener listener;
+    private OnReaderListener onReaderListener;
 
-    void setReaderListener(ReaderListener readerListener) {
-        this.listener = readerListener;
+    void setOnReaderListener(OnReaderListener readerListener) {
+        this.onReaderListener = readerListener;
     }
 
-    public ReaderThread(InputStream is, ReaderListener listener) {
+    public ReaderThread(InputStream is, OnReaderListener onReaderListener) {
         this.is = is;
-        this.dis = new DataInputStream(is);
-        this.listener = listener;
-    }
-
-    public static void read(DataInputStream is, byte[] data, int size)
-            throws IOException {
-        int left = size;
-        int offset = 0;
-
-        while (left > 0) {
-            int len = is.read(data, offset, left);
-            left -= len;
-            offset += len;
-        }
+        this.onReaderListener = onReaderListener;
     }
 
     @Override
@@ -64,24 +36,24 @@ class ReaderThread extends Thread {
         byte[] data = new byte[1024];
         try {
             while (true) {
+                int len = is.read(data);
+                if (len == -1)
+                    break;
 
-                int packetLen = dis.readInt();
-                read(dis, data, packetLen);
-                String message = new String(data, 0, packetLen);
-                System.out.println(message);
-
-                // create sea 8000
-                listener.onTurnChange(message);
-                listener.onUsers(message);
-                listener.onDraw(message);
-                listener.onSuccess(message);
-                listener.onFail(message);
-                listener.onDisconnect(message);
-                listener.onRefresh(message);
+                String message = new String(data, 0, len);
+                if(onReaderListener != null){
+                    onReaderListener.onRead(message);
+                }
 
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
@@ -90,29 +62,42 @@ public class ChatClient {
     private static final String TAG = "ChatClient";
     private Socket socket;
     private OutputStream os;
-    private DataOutputStream dos;
     private ReaderThread readerThread;
     private BufferedReader bufferedReader = null;
     private String responseString = "";
 
-    public DataOutputStream getDos() {
-        return dos;
+    public OutputStream getOs() {
+        return os;
     }
 
-    public void connect() throws IOException {
+    private OnReaderListener onReaderListener = new OnReaderListener() {
+        @Override
+        public void onRead(String message) {
+            System.out.println(message);
+        }
+    };
+
+    public ChatClient() {
+        connect();
+    }
+
+
+    public void connect(){
 
         new Thread() {
             public void run() {
                 try {
                     socket = new Socket("13.230.142.157", 8081);
                     os = socket.getOutputStream();
-                    dos = new DataOutputStream(os);
 
                     boolean result = socket.isConnected();
                     if (result) Log.d(TAG, "서버에 연결됨");
                     else Log.d(TAG, "서버 연결 실패");
                     os.flush();
-                    dos.flush();
+
+                    readerThread = new ReaderThread(socket.getInputStream(), onReaderListener);
+                    readerThread.start();
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -137,6 +122,10 @@ public class ChatClient {
                     jsonObject.put("message", message);
 
                     byte[] setMsg = jsonObject.toString().getBytes();
+//                    dos.writeInt(setMsg.length);
+//                    dos.write(setMsg);
+
+//                    os.writeInt(setMsg.length);
                     os.write(setMsg);
                     Log.d(TAG, "sended message - " +jsonObject.toString());
 
@@ -147,6 +136,7 @@ public class ChatClient {
                     Log.d(TAG, "buffered reader - " + bufferedReader.toString());
                     Log.d(TAG, "buffered reader test- ");
                     while ((str = bufferedReader.readLine()) != null) {
+//                        responseString.append(str);
                         responseString = str;
                         Log.d(TAG, "From server - " + responseString);
                     }
@@ -155,7 +145,12 @@ public class ChatClient {
                 }
             }
         }.start();
-
+//        String message = "[{"+"userID:"+"dongwonS2"+","+"protocol:"+"message"+","+
+//                "type:"+"태음인"+","+"message:"+"회원가입 왜 안되냐"+"}]";
+//        byte[] setMsg = message.getBytes();
+//        dos.writeInt(setMsg.length);
+//        dos.write(setMsg);
+//        Log.d(TAG,"sended message");
     }
 
 }

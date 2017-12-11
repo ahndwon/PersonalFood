@@ -1,6 +1,5 @@
 package com.team11.personalfood.Utilities;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.team11.personalfood.Models.Chat;

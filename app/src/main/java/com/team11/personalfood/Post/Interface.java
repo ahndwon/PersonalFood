@@ -14,9 +14,6 @@ import retrofit2.http.Query;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
-/**
- * Created by Dori on 12/28/2016.
- */
 
 public interface Interface {
 

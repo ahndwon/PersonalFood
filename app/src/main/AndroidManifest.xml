@@ -24,6 +24,6 @@
             android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".SignupActivity"/>
     </application>
 </manifest>
