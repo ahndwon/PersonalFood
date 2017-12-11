@@ -169,24 +169,18 @@ public class Client {
 
                 for(int j = 0;j<token.length;j++) {
                     for(int k = 0; k<negativeToken.length; k++){
-//                        Log.d(TAG, "negative comparing : " + (negativeToken[k]) + "with" +token[j]);
                         if(token[j].equals(negativeToken[k])){
                             negativeString+=token[j] +", ";
                         }
                     }
 
                     for(int k = 0; k<positiveToken.length; k++){
-//                        Log.d(TAG, "positive comparing : " + (positiveToken[k]) + "with" +token[j]);
                         if(token[j].equals(positiveToken[k])){
                             positiveString+=token[j] +", ";
                         }
                     }
                 }
 
-                Log.d(TAG,"getFoodResult -" + item);
-                Log.d(TAG,"getFoodResult TAG_FOOD_NAME- " + item.getString(TAG_FOOD_NAME));
-                Log.d(TAG,"getFoodResult TAG_FOOD_URL- " + item.getString(TAG_FOOD_URL));
-                Log.d(TAG,"getFoodResult TAG_INGREDIENT-" + item.getString(TAG_INGREDIENT));
                 if(negativeString.length()>0){
                     filteredHashMap.put(TAG_NEGATIVE_INGREDIENT, negativeString.substring(0,negativeString.length()-2));
                 } else {
