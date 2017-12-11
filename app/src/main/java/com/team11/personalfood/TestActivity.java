@@ -1,9 +1,13 @@
 package com.team11.personalfood;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +15,8 @@ import android.widget.TextView;
 import com.team11.personalfood.Models.Test;
 
 public class TestActivity extends BaseActivity {
+
+    private static final String TAG = "TestActivity";
 
     private TextView questionText;
     private Button taeYangAnswerButton;
@@ -67,7 +73,6 @@ public class TestActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
-
 
         taeYangAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,5 +182,6 @@ public class TestActivity extends BaseActivity {
         currentQuestion = 0;
 
     }
+
 
 }

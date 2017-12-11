@@ -44,10 +44,5 @@ class FoodListViewHolder extends AbstractViewHolder<Food> {
 
 
 
-//        StringBuilder buses = new StringBuilder();
-//        for(Bus bus : item.getBusList()) {
-//            buses.append(bus.getNumber()).append(" ");
-//        }
-//        busList.setText(buses.toString());
     }
 }

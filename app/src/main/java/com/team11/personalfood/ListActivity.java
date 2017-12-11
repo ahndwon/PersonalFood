@@ -164,9 +164,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
-
-        mArrayList = riceClient.getFoodResult(typeClient.getTypeResult());
-        setFood();
+        
 
 
     }

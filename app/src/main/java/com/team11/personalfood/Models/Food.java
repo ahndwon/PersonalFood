@@ -9,6 +9,7 @@ public class Food {
         this.foodName = foodName;
         this.negativeIngredient = negativeIngredient;
         this.positiveIngredient = positiveIngredient;
+
     }
 
     public String getFoodName() {
@@ -22,10 +23,6 @@ public class Food {
     public String getPositiveIngredient() {
         return positiveIngredient;
     }
-    //    public String getIngredient() {
-//        return ingredient;
-//    }
-
 
     public void setFoodName(String foodName) {
         this.foodName = foodName;
@@ -39,7 +36,5 @@ public class Food {
         this.positiveIngredient = positiveIngredient;
     }
 
-    //    public void setIngredient(String ingredient) {
-//        this.ingredient = ingredient;
-//    }
+
 }
