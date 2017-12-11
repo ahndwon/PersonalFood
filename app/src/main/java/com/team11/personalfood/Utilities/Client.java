@@ -3,33 +3,18 @@ package com.team11.personalfood.Utilities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 public class Client {
@@ -47,6 +32,7 @@ public class Client {
     String password;
 
     private Context mContext;
+
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
     private OnFoodLoadListener onFoodLoadListener;
@@ -64,6 +50,7 @@ public class Client {
         new GetData(onFoodLoadListener).execute(url);
 //        GetData task = new GetData();
 //        task.execute(url);
+
     }
 
     private class GetData extends AsyncTask<String, Void, String> {
@@ -88,6 +75,7 @@ public class Client {
             super.onPostExecute(result);
             progressDialog.dismiss();
 
+
             Log.d(TAG, "response  - " + result);
 
             if (result == null) {
@@ -95,6 +83,7 @@ public class Client {
             } else {
                 mJsonString = result;
             }
+
         }
 
 
@@ -202,7 +191,6 @@ public class Client {
                     filteredHashMap.put(TAG_NEGATIVE_INGREDIENT, negativeString.substring(0,negativeString.length()-2));
                 } else {
                     filteredHashMap.put(TAG_NEGATIVE_INGREDIENT, "");
-
                 }
                 if(positiveString.length()>0) {
                     filteredHashMap.put(TAG_POSITIVE_INGREDIENT, positiveString.substring(0,positiveString.length()-2));
@@ -238,7 +226,6 @@ public class Client {
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
-
                 String negIngredient = item.getString(TAG_NEGATIVE_INGREDIENT);
                 String posIngredient = item.getString(TAG_POSITIVE_INGREDIENT);
 
@@ -257,6 +244,38 @@ public class Client {
 
             Log.d(TAG, "showResult : ", e);
         }
+        return mArrayList;
+    }
+
+    public ArrayList getSearchedFood() {
+        try {
+            JSONArray jsonArray = new JSONArray(mJsonString);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                String negIngredient = item.getString(TAG_NEGATIVE_INGREDIENT);
+                String posIngredient = item.getString(TAG_POSITIVE_INGREDIENT);
+
+                HashMap<String, String> hashMap = new HashMap<>();
+
+                hashMap.put(TAG_NEGATIVE_INGREDIENT, negIngredient);
+                hashMap.put(TAG_POSITIVE_INGREDIENT, posIngredient);
+
+
+                mArrayList.add(hashMap);
+                Log.d(TAG, "showTypeArrayList : " + mArrayList);
+            }
+        } catch (JSONException e) {
+
+            Log.d(TAG, "showResult : ", e);
+        }
+        return mArrayList;
+    }
+
+
+    public ArrayList<HashMap<String, String>> getmArrayList() {
         return mArrayList;
     }
 

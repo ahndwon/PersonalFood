@@ -26,7 +26,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
 public class Communicator {
     private static  final String TAG = "Communicator";
     private static final String SERVER_URL = "http://13.230.142.157:8080";

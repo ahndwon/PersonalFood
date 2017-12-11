@@ -35,12 +35,10 @@ public class LoginActivity extends BaseActivity {
         mLogin = findViewById(R.id.field_login_id);
         mPassword= findViewById(R.id.field_login_password);
         loginButton = findViewById(R.id.real_login_button);
-
     }
 
     public void onRealLoginBtnClick(View view) {
         useLoginPost(mLogin.getText().toString(), mPassword.getText().toString());
-
 
         Intent intent = new Intent(getApplicationContext(),ListActivity.class);
         startActivity(intent);

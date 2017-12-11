@@ -65,10 +65,6 @@ class ReaderThread extends Thread {
         try {
             while (true) {
 
-//                int len = is.read(data);
-//                if (len == -1)
-//                    break;
-
                 int packetLen = dis.readInt();
                 read(dis, data, packetLen);
                 String message = new String(data, 0, packetLen);
@@ -141,10 +137,6 @@ public class ChatClient {
                     jsonObject.put("message", message);
 
                     byte[] setMsg = jsonObject.toString().getBytes();
-//                    dos.writeInt(setMsg.length);
-//                    dos.write(setMsg);
-
-//                    os.writeInt(setMsg.length);
                     os.write(setMsg);
                     Log.d(TAG, "sended message - " +jsonObject.toString());
 
@@ -155,7 +147,6 @@ public class ChatClient {
                     Log.d(TAG, "buffered reader - " + bufferedReader.toString());
                     Log.d(TAG, "buffered reader test- ");
                     while ((str = bufferedReader.readLine()) != null) {
-//                        responseString.append(str);
                         responseString = str;
                         Log.d(TAG, "From server - " + responseString);
                     }
@@ -164,12 +155,7 @@ public class ChatClient {
                 }
             }
         }.start();
-//        String message = "[{"+"userID:"+"dongwonS2"+","+"protocol:"+"message"+","+
-//                "type:"+"태음인"+","+"message:"+"회원가입 왜 안되냐"+"}]";
-//        byte[] setMsg = message.getBytes();
-//        dos.writeInt(setMsg.length);
-//        dos.write(setMsg);
-//        Log.d(TAG,"sended message");
+
     }
 
 }

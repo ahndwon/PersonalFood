@@ -43,6 +43,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private FoodListRecyclerAdapter adapter;
     private FoodModel foodModel;
 
+    private Button allCategoryBtn;
     private Button riceCategoryBtn;
     private Button kimchiCategoryBtn;
     private Button breadCategoryBtn;
@@ -55,6 +56,8 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private Button sideDishCategoryBtn;
     private Button sauceCategoryBtn;
     private Button etcCategoryBtn;
+    private Button searchBtn;
+
 
     private Client typeClient;
     private Client allCategoryClient;
@@ -70,6 +73,9 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private Client sideDishClient;
     private Client sauceClient;
     private Client etcClient;
+    private Client searchClient;
+
+    private int counter= 0;
 
     public static Context listActivityContext;
 
@@ -89,8 +95,11 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
 
         listActivityContext = this;
 
+
         foodListRecyclerView = findViewById(R.id.foodList_recyclerView);
         searchEditText = findViewById(R.id.search_editText);
+
+        allCategoryBtn = findViewById(R.id.allCategory_button);
         riceCategoryBtn = findViewById(R.id.riceCategory_button);
         kimchiCategoryBtn = findViewById(R.id.kimchiCategory_button);
         breadCategoryBtn = findViewById(R.id.breadCategory_button);
@@ -103,6 +112,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sideDishCategoryBtn = findViewById(R.id.sideDishCategory_button);
         sauceCategoryBtn = findViewById(R.id.sauceCategory_button);
         etcCategoryBtn = findViewById(R.id.etcCategory_button);
+        searchBtn = findViewById(R.id.search_button);
 
         BtnOnClickListener btnOnClickListener = new BtnOnClickListener();
 
@@ -120,6 +130,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sideDishClient = new Client(this);
         sauceClient = new Client(this);
         etcClient = new Client(this);
+        searchClient = new Client(this);
 
 
         typeClient.getData("http://13.230.142.157:8080/a/constitution/태양인");
@@ -134,12 +145,13 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         pizzaClient.getData("http://13.230.142.157:8080/a/data/피자-스파게티-스테이크");
         msgClient.getData("http://13.230.142.157:8080/a/data/장류-조미료-가루류");
         sideDishClient.getData("http://13.230.142.157:8080/a/data/반찬");
-        sauceClient.getData("http://13.230.142.157:8080/a/data/잼-드레싱-소스");
+        sauceClient.getData("http://13.230.142.157:8080/a/data/ 잼-드레싱-소스");
         etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
 
 
         setUpFoodListView();
 
+        allCategoryBtn.setOnClickListener(btnOnClickListener);
         riceCategoryBtn.setOnClickListener(btnOnClickListener);
         kimchiCategoryBtn.setOnClickListener(btnOnClickListener);
         breadCategoryBtn.setOnClickListener(btnOnClickListener);
@@ -152,6 +164,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         sideDishCategoryBtn.setOnClickListener(btnOnClickListener);
         sauceCategoryBtn.setOnClickListener(btnOnClickListener);
         etcCategoryBtn.setOnClickListener(btnOnClickListener);
+        searchBtn.setOnClickListener(btnOnClickListener);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -176,7 +189,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         return super.onOptionsItemSelected(item);
     }
 
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.list_menu, menu);
 
@@ -200,6 +212,11 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
+                case R.id.allCategory_button:
+                    Log.d(TAG, "allCategoryBtn Clicked");
+                    mArrayList = allCategoryClient.getFoodResult(typeClient.getTypeResult());
+                    setFood();
+                    break;
                 case R.id.riceCategory_button:
                     Log.d(TAG, "riceCategoryBtn Clicked");
                     mArrayList = riceClient.getFoodResult(typeClient.getTypeResult());
@@ -259,6 +276,30 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
                     Log.d(TAG, "etcCategoryBtn Clicked");
                     mArrayList = etcClient.getFoodResult(typeClient.getTypeResult());
                     setFood();
+                    break;
+                case R.id.search_button:
+                    Log.d(TAG, "searchBtn Clicked");
+                    if(counter==0) {
+                        Log.d(TAG, "searchBtn counter 0");
+                        String searchingFood = searchEditText.getText().toString();
+                        String url = "http://13.230.142.157:8080/a/data/food/" + searchingFood;
+                        searchClient.getData(url);
+
+                        counter++;
+                    } else if(counter == 1) {
+                        Log.d(TAG, "searchBtn counter 1");
+                        mArrayList = searchClient.getFoodResult(typeClient.getTypeResult());
+                        for(int i = 0 ; i < searchClient.getmArrayList().size(); i++){
+//                        System.out.println("searchClient" + searchClient.getmArrayList().get(i));
+                            Log.d(TAG, "SearchBtn searchClient - " + searchClient.getmArrayList().get(i));
+                        }
+                        setFood();
+                        counter = 0;
+                    }
+
+
+//                    mArrayList = searchClient.getFoodResult(typeClient.getTypeResult());
+//                    setFood();
                     break;
             }
         }
