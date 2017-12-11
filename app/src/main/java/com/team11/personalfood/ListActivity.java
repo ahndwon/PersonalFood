@@ -131,7 +131,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
 
 
-
         setUpFoodListView();
 //        mArrayList = allCategoryClient.getFoodResult();
 //        setFood();
@@ -162,6 +161,10 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
+
+        mArrayList = riceClient.getFoodResult(typeClient.getTypeResult());
+        setFood();
+
 
     }
 

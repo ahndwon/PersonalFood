@@ -32,9 +32,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- * Created by andong-won on 2017. 12. 9..
- */
 public class Client {
 
     private static String TAG = "ClIENT";
@@ -65,8 +62,9 @@ public class Client {
     }
 
     public void getData(String url) {
-        GetData task = new GetData();
-        task.execute(url);
+        new GetData().execute(url);
+//        GetData task = new GetData();
+//        task.execute(url);
     }
 
     private class GetData extends AsyncTask<String, Void, String> {
@@ -136,6 +134,8 @@ public class Client {
 
 
                 bufferedReader.close();
+
+                mJsonString = sb.toString().trim();
 
 
                 return sb.toString().trim();
