@@ -265,7 +265,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     }
 
     public void setFood() {
-        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME, TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
+        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME, TAG_FOOD_URL, TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
         foodModel.setOnFoodLoadListener(this);
         foodModel.fetchFood();
     }
