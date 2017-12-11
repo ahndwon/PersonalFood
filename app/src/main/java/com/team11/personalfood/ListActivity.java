@@ -1,6 +1,7 @@
 package com.team11.personalfood;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -35,6 +36,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private static final String TAG_INGREDIENT = "Ingredient";
     private static final String TAG_POSITIVE_INGREDIENT = "Positive_Ingredient";
     private static final String TAG_NEGATIVE_INGREDIENT = "Negative_Ingredient";
+    private static final String TAG_FOOD_URL = "Food_URL";
 
     private RecyclerView foodListRecyclerView;
     private EditText searchEditText;
@@ -69,6 +71,8 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private Client sauceClient;
     private Client etcClient;
 
+    public static Context listActivityContext;
+
     private String currentUserType;
 
 
@@ -82,6 +86,8 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
         setSupportActionBar(toolbar);
+
+        listActivityContext = this;
 
         foodListRecyclerView = findViewById(R.id.foodList_recyclerView);
         searchEditText = findViewById(R.id.search_editText);
@@ -165,9 +171,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
-        mArrayList = riceClient.getFoodResult(typeClient.getTypeResult());
-        setFood();
-
 
     }
 
@@ -200,6 +203,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         adapter = new FoodListRecyclerAdapter();
         foodListRecyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void onFetchFood(List<Food> foodList) {
@@ -276,7 +280,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     }
 
     public void setFood() {
-        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME, TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
+        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME,TAG_FOOD_URL,  TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
         foodModel.setOnFoodLoadListener(this);
         foodModel.fetchFood();
     }

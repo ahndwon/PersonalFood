@@ -34,7 +34,6 @@ public class ChatModel {
 //        chatList.add(new Chat("영일중안동원", "태음인", "태음인나와라~~!"));
         chatList = new ArrayList<>();
         System.out.println("asdf");
-
     }
 
     public void fetchChat(){

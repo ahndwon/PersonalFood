@@ -20,19 +20,8 @@ import retrofit2.http.Url;
 
 public interface Interface {
 
-
-//    @POST("/a/users/join")
-//    Call<ServerResponse> postJoin(
-////            @Field("method") String method,
-//            @Field("UserID") String userId,
-//            @Field("Password") String password,
-//            @Field("Name") String name,
-//            @Field("Birth") Date birth
-//    );
-
     @POST("/a/users/join")
     Call<ServerResponse> postJoin(
-//            @Field("method") String method,
             @Body JoinData body
     );
 
@@ -41,25 +30,6 @@ public interface Interface {
             @Body LoginData body
     );
 
-//    @
-//    Call<ServerResponse> sendChat(
-//            @Body Chat body
-//    );
-//    @FormUrlEncoded
-//    @POST("/a/users/login")
-//    Call<ServerResponse> postLogin(
-////            @Field("method") String method,
-//            @Field("UserID") String userId,
-//            @Field("Password") String password
-//    );
 
-
-
-    @GET("/sp/index.php")
-    Call<ServerResponse> get(
-            @Query("method") String method,
-            @Query("username") String username,
-            @Query("password") String password
-    );
 
 }

@@ -55,6 +55,7 @@ public class Communicator {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
         Date convertedDate = new Date();
+
         try {
             convertedDate = dateFormat.parse(birth);
         } catch (ParseException e) {
@@ -141,56 +142,4 @@ public class Communicator {
 
 
     }
-
-//    public void sendChat(String userId, String type, String message) {
-//
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//        httpClient.addInterceptor(logging);
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .client(httpClient.build())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl(CHAT_SERVER_URL)
-//                .build();
-//
-//        Interface service = retrofit.create(Interface.class);
-//
-//        Call<ServerResponse> call = service.sendChat(new Chat(userId, type, message));
-//        Log.d(TAG, String.valueOf(call));
-//        call.enqueue(new Callback<ServerResponse>() {
-//            @Override
-//            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-//                // response.isSuccessful() is true if the response code is 2xx
-//                Boolean bool = response.isSuccessful();
-//                Log.d(TAG, "response" + response);
-//
-//
-////                Intent intent = new Intent(mContext,ListActivity.class);
-////                mContext.startActivity(intent);
-//
-//                BusProvider.getInstance().post(new ServerEvent(response.body()));
-//                Log.d(TAG, "isSuccessful:" + bool.toString());
-//                Log.e(TAG, "POstSuccess");
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ServerResponse> call, Throwable t) {
-//                // handle execution failures like no internet connectivity
-//                BusProvider.getInstance().post(new ErrorEvent(-2, t.getMessage()));
-//            }
-//        });
-//
-//    }
-//
-//    @Produce
-//    public ServerEvent produceServerEvent(ServerResponse serverResponse) {
-//        return new ServerEvent(serverResponse);
-//    }
-//
-//    @Produce
-//    public ErrorEvent produceErrorEvent(int errorCode, String errorMsg) {
-//        return new ErrorEvent(errorCode, errorMsg);
-//    }
 }

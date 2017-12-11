@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.team11.personalfood.Models.Chat;
 import com.team11.personalfood.R;
 
@@ -38,6 +39,7 @@ public class ChatListViewHolder extends AbstractViewHolder<Chat> {
 
     @Override
     public void onBindView(@NonNull Chat item, int position) {
+
         userId.setText(item.getUserId());
         userType.setText(stringManipulation(item.getUserType()));
         message.setText(item.getMessage());

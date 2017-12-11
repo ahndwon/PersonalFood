@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
+import com.team11.personalfood.ListActivity;
 import com.team11.personalfood.Models.Food;
 import com.team11.personalfood.R;
 
@@ -17,6 +20,7 @@ class FoodListViewHolder extends AbstractViewHolder<Food> {
     private TextView negativeIngredient;
     private TextView positiveIngredient;
     private ImageView foodImage;
+    private ImageLoader imageLoader;
 
     public FoodListViewHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_food, parent, false));
@@ -38,16 +42,10 @@ class FoodListViewHolder extends AbstractViewHolder<Food> {
 //        negativeIngredient.setText(item.getNegativeIngredient());
 //        positiveIngredient.setText(item.getPositiveIngredient());
 
+        Picasso.with(ListActivity.listActivityContext).load(item.getFoodUrl()).into(foodImage);
         //야매 fix
         negativeIngredient.setText(item.getPositiveIngredient());
         positiveIngredient.setText(item.getNegativeIngredient());
 
-
-
-//        StringBuilder buses = new StringBuilder();
-//        for(Bus bus : item.getBusList()) {
-//            buses.append(bus.getNumber()).append(" ");
-//        }
-//        busList.setText(buses.toString());
     }
 }

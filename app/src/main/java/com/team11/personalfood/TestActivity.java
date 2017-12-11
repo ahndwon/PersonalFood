@@ -18,6 +18,7 @@ public class TestActivity extends BaseActivity {
     private Button soYangAnswerButton;
     private Button soEumAnswerButton;
 
+
     private Test[] tests = new Test[]{
             new Test(R.string.question1, R.string.answer1_1, R.string.answer1_2, R.string.answer1_3, R.string.answer1_4),
             new Test(R.string.question2, R.string.answer2_1, R.string.answer2_2, R.string.answer2_3, R.string.answer2_4),
@@ -67,7 +68,6 @@ public class TestActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
-
 
         taeYangAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,6 +11,7 @@ public class CurrentUser {
     private String name;
     private String birth;
     private String type;
+
     public CurrentUser(String userID, String password, String name, String birth, String type){
         this.userID = userID;
         this.password = password;
