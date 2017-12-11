@@ -2,7 +2,10 @@ package com.team11.personalfood.Utilities;
 
 import android.util.Log;
 
+import com.team11.personalfood.Models.Chat;
+import com.team11.personalfood.Post.Communicator;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,10 +15,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 
 interface OnReaderListener {
     void onRead(String message);
+
 }
 
 class ReaderThread extends Thread {
@@ -65,6 +71,11 @@ public class ChatClient {
     private ReaderThread readerThread;
     private BufferedReader bufferedReader = null;
     private String responseString = "";
+    private JSONObject jsonObject;
+    private OnChatLoadListener onChatLoadListener;
+
+    private String myID = "JJANgGU";
+    private String myType = "태음인";
 
     public OutputStream getOs() {
         return os;
@@ -74,10 +85,56 @@ public class ChatClient {
         @Override
         public void onRead(String message) {
             System.out.println(message);
+            Chat chat;
+            try {
+                JSONObject jsonObject = new JSONObject(message);
+                String protocol = jsonObject.getString("protocol");
+
+                switch (protocol){
+                    case "filter":
+                        List<Chat> chatList = new ArrayList<>();
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+                        for(int i=0; i<jsonArray.length(); i++){
+                            JSONObject item = jsonArray.getJSONObject(i);
+
+                            String userId = item.getString("UserID");
+                            String type = item.getString("Type");
+                            String currentMessage = item.getString("Message");
+
+                            chat = new Chat(userId, type, currentMessage);
+                            chatList.add(chat);
+
+                        }
+
+                        if(onChatLoadListener!=null){
+                            onChatLoadListener.onFetchChat(chatList);
+                        }
+                        break;
+
+                    case "message":
+                        String user = jsonObject.getString("user");
+                        String userMessage = jsonObject.getString("message");
+                        String userType = jsonObject.getString("type");
+
+
+                        chat = new Chat(user, userType, userMessage);
+
+                        if(onChatLoadListener!=null){
+                            onChatLoadListener.onAddChat(chat);
+                        }
+                        break;
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     };
 
-    public ChatClient() {
+    public ChatClient(OnChatLoadListener onChatLoadListener) {
+        this.onChatLoadListener = onChatLoadListener;
         connect();
     }
 
@@ -95,19 +152,25 @@ public class ChatClient {
                     else Log.d(TAG, "서버 연결 실패");
                     os.flush();
 
-//                    System.out.println(Communicator.currentUser.getName());
+                    jsonObject = new JSONObject();
+
+                    jsonObject.put("userID", myID);
+                    jsonObject.put("protocol", "filter");
+                    jsonObject.put("type", "");
+
+                    byte[] setMsg = jsonObject.toString().getBytes();
+                    os.write(setMsg);
 
                     readerThread = new ReaderThread(socket.getInputStream(), onReaderListener);
                     readerThread.start();
 
 
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
 
                 }
             }
         }.start();
-
 
     }
 
@@ -116,7 +179,7 @@ public class ChatClient {
             public void run() {
                 try {
 
-                    JSONObject jsonObject = new JSONObject();
+                    jsonObject = new JSONObject();
 
                     jsonObject.put("userID", userId);
                     jsonObject.put("protocol", "message");
@@ -124,7 +187,10 @@ public class ChatClient {
                     jsonObject.put("message", message);
 
                     byte[] setMsg = jsonObject.toString().getBytes();
+//                    dos.writeInt(setMsg.length);
+//                    dos.write(setMsg);
 
+//                    os.writeInt(setMsg.length);
                     os.write(setMsg);
                     Log.d(TAG, "sended message - " +jsonObject.toString());
 
@@ -135,7 +201,7 @@ public class ChatClient {
                     Log.d(TAG, "buffered reader - " + bufferedReader.toString());
                     Log.d(TAG, "buffered reader test- ");
                     while ((str = bufferedReader.readLine()) != null) {
-
+//                        responseString.append(str);
                         responseString = str;
                         Log.d(TAG, "From server - " + responseString);
                     }
@@ -151,7 +217,5 @@ public class ChatClient {
 //        dos.write(setMsg);
 //        Log.d(TAG,"sended message");
     }
-
-
 
 }

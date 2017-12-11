@@ -1,9 +1,15 @@
 package com.team11.personalfood.Utilities;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,6 +25,7 @@ public class ChatListViewHolder extends AbstractViewHolder<Chat> {
     private TextView userId;
     private TextView userType;
     private TextView message;
+    private String myName = "JJANgGU";
 
 
     public ChatListViewHolder(ViewGroup parent) {
@@ -36,7 +43,14 @@ public class ChatListViewHolder extends AbstractViewHolder<Chat> {
 
     @Override
     public void onBindView(@NonNull Chat item, int position) {
-
+//        if(item.getUserId().equals(myName)){
+//            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//            layoutParams.gravity = Gravity.RIGHT;
+//            userId.setLayoutParams(layoutParams);
+//            userType.setLayoutParams(layoutParams);
+//            message.setLayoutParams(layoutParams);
+//
+//        }
         userId.setText(item.getUserId());
         userType.setText(stringManipulation(item.getUserType()));
         message.setText(item.getMessage());
