@@ -133,21 +133,21 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         searchClient = new Client(this);
 
 
-        typeClient.getData("http://13.230.142.157:8080/a/constitution/태양인");
-        allCategoryClient.getData("http://13.230.142.157:8080/a/data/");
-        riceClient.getData("http://13.230.142.157:8080/a/data/밥-죽");
-        kimchiClient.getData("http://13.230.142.157:8080/a/data/김치-젓갈-장아찌");
-        breadClient.getData("http://13.230.142.157:8080/a/data/떡-빵-과자");
-        noodleClient.getData("http://13.230.142.157:8080/a/data/면류-만두");
-        saladClient.getData("http://13.230.142.157:8080/a/data/샐러드-수프");
-        iceCreamClient.getData("http://13.230.142.157:8080/a/data/음료류-빙과-유제품");
-        soupClient.getData("http://13.230.142.157:8080/a/data/국물요리");
-        pizzaClient.getData("http://13.230.142.157:8080/a/data/피자-스파게티-스테이크");
-        msgClient.getData("http://13.230.142.157:8080/a/data/장류-조미료-가루류");
-        sideDishClient.getData("http://13.230.142.157:8080/a/data/반찬");
-        sauceClient.getData("http://13.230.142.157:8080/a/data/ 잼-드레싱-소스");
-        etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
-
+//        typeClient.getData("http://13.230.142.157:8080/a/constitution/태양인");
+//        allCategoryClient.getData("http://13.230.142.157:8080/a/data/");
+//        riceClient.getData("http://13.230.142.157:8080/a/data/밥-죽");
+//        kimchiClient.getData("http://13.230.142.157:8080/a/data/김치-젓갈-장아찌");
+//        breadClient.getData("http://13.230.142.157:8080/a/data/떡-빵-과자");
+//        noodleClient.getData("http://13.230.142.157:8080/a/data/면류-만두");
+//        saladClient.getData("http://13.230.142.157:8080/a/data/샐러드-수프");
+//        iceCreamClient.getData("http://13.230.142.157:8080/a/data/음료류-빙과-유제품");
+//        soupClient.getData("http://13.230.142.157:8080/a/data/국물요리");
+//        pizzaClient.getData("http://13.230.142.157:8080/a/data/피자-스파게티-스테이크");
+//        msgClient.getData("http://13.230.142.157:8080/a/data/장류-조미료-가루류");
+//        sideDishClient.getData("http://13.230.142.157:8080/a/data/반찬");
+//        sauceClient.getData("http://13.230.142.157:8080/a/data/ 잼-드레싱-소스");
+//        etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
+//
 
         setUpFoodListView();
 

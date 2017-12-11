@@ -24,6 +24,8 @@ public class LoginActivity extends BaseActivity {
     private EditText mLogin;
     private EditText mPassword;
 
+    private Client client;
+
 
 
     @Override
@@ -31,6 +33,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         communicator = new Communicator(this);
+        client = new Client(this);
 
         mLogin = findViewById(R.id.field_login_id);
         mPassword= findViewById(R.id.field_login_password);
@@ -38,8 +41,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void onRealLoginBtnClick(View view) {
-        useLoginPost(mLogin.getText().toString(), mPassword.getText().toString());
+//        useLoginPost(mLogin.getText().toString(), mPassword.getText().toString());
 
+        client.startLogin(mLogin.getText().toString(), mPassword.getText().toString());
         Intent intent = new Intent(getApplicationContext(),ListActivity.class);
         startActivity(intent);
     }

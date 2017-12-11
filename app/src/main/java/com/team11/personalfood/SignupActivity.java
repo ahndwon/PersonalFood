@@ -64,6 +64,8 @@ public class SignupActivity extends BaseActivity {
         mFieldBirth = findViewById(R.id.field_birth);
         buttonInsert = findViewById(R.id.btn_register);
 
+        signupClient = new Client(this);
+
         calendar = Calendar.getInstance();
         signupClient = new Client(this);
 
@@ -103,7 +105,8 @@ public class SignupActivity extends BaseActivity {
 //                task.execute(userId, password, name, birth, userType);userType
 //                signupClient.startSignup(userId, password, name, birth, userType);
 
-                useJoinPost(userId, password,name,birth , userType);
+                signupClient.startSignup(userId,password,name,birth,userType);
+//                useJoinPost(userId, password,name,birth , userType);
 
                 Intent intent = new Intent(getApplicationContext(),ListActivity.class);
                 startActivity(intent);

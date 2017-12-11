@@ -17,7 +17,6 @@ import java.net.Socket;
 
 interface OnReaderListener {
     void onRead(String message);
-
 }
 
 class ReaderThread extends Thread {
@@ -97,7 +96,7 @@ public class ChatClient {
                     else Log.d(TAG, "서버 연결 실패");
                     os.flush();
 
-                    System.out.println(Communicator.currentUser.getName());
+//                    System.out.println(Communicator.currentUser.getName());
 
                     readerThread = new ReaderThread(socket.getInputStream(), onReaderListener);
                     readerThread.start();
@@ -126,10 +125,7 @@ public class ChatClient {
                     jsonObject.put("message", message);
 
                     byte[] setMsg = jsonObject.toString().getBytes();
-//                    dos.writeInt(setMsg.length);
-//                    dos.write(setMsg);
 
-//                    os.writeInt(setMsg.length);
                     os.write(setMsg);
                     Log.d(TAG, "sended message - " +jsonObject.toString());
 
@@ -140,7 +136,7 @@ public class ChatClient {
                     Log.d(TAG, "buffered reader - " + bufferedReader.toString());
                     Log.d(TAG, "buffered reader test- ");
                     while ((str = bufferedReader.readLine()) != null) {
-//                        responseString.append(str);
+
                         responseString = str;
                         Log.d(TAG, "From server - " + responseString);
                     }
@@ -156,5 +152,7 @@ public class ChatClient {
 //        dos.write(setMsg);
 //        Log.d(TAG,"sended message");
     }
+
+
 
 }
