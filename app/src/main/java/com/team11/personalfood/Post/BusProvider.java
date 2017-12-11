@@ -1,5 +1,6 @@
 package com.team11.personalfood.Post;
 
+
 import com.squareup.otto.Bus;
 
 public class BusProvider {

@@ -57,7 +57,6 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     @BindView(R.id.field_message)
     AppCompatEditText fieldMessage;
 
-    private Client client;
     private ChatClient chatClient;
     private ChatModel chatModel;
     private String myID = "JJANgGU";
@@ -86,6 +85,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 //        client = new Client(this);
         chatModel.setOnChatLoadListener(this);
         chatModel.fetchChat();
+        chatClient = new ChatClient(this);
 
         //팝업 토글 온클릭
         ImageButton.OnClickListener onClickListener = view -> {
@@ -137,8 +137,10 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                         e.printStackTrace();
                     }
                 }
-                Chat chat = new Chat(myID, myType, fieldMessage.getText().toString());
-                adapter.addItem(chat);
+
+//                Chat chat = new Chat(myID, myType, fieldMessage.getText().toString());
+
+
 
                 chatListRecyclerView.scrollToPosition(adapter.getItemCount()-1);
                 fieldMessage.setText("");
@@ -157,7 +159,6 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         //chatClient Thread
         new Thread() {
                     public void run() {
-                        chatClient = new ChatClient();
                         if (chatClient.getOs() != null) {
                             Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
                         }
@@ -217,6 +218,12 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 
         adapter.setItems(chatList);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAddChat(Chat chat) {
+        adapter.addItem(chat);
+
     }
 
 }
