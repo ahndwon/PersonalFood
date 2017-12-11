@@ -2,6 +2,8 @@ package com.team11.personalfood.Utilities;
 
 import android.util.Log;
 
+import com.team11.personalfood.Post.Communicator;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -94,6 +96,8 @@ public class ChatClient {
                     if (result) Log.d(TAG, "서버에 연결됨");
                     else Log.d(TAG, "서버 연결 실패");
                     os.flush();
+
+                    System.out.println(Communicator.currentUser.getName());
 
                     readerThread = new ReaderThread(socket.getInputStream(), onReaderListener);
                     readerThread.start();

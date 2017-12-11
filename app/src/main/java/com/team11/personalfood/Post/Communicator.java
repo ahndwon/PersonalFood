@@ -32,6 +32,15 @@ public class Communicator {
     private static final String CHAT_SERVER_URL = "http://13.230.142.157:8081";
 
     public static CurrentUser currentUser;
+    private Boolean bool;
+
+    public Boolean getBool() {
+        return bool;
+    }
+
+    //    public CurrentUser getCurrentUser() {
+//        return currentUser;
+//    }
 
     private Context mContext;
     public Communicator(Context context) {
@@ -68,7 +77,7 @@ public class Communicator {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 // response.isSuccessful() is true if the response code is 2xx
-                Boolean bool = response.isSuccessful();
+                bool = response.isSuccessful();
 
                 ServerResponse mResponse = response.body();
                 currentUser = new CurrentUser(mResponse.getUserID(),mResponse.getPassword(),
@@ -117,17 +126,22 @@ public class Communicator {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 // response.isSuccessful() is true if the response code is 2xx
-                Boolean bool = response.isSuccessful();
+                bool = response.isSuccessful();
                 Log.d(TAG, "response" + response );
 
                 ServerResponse mResponse = response.body();
+//                if (mResponse != null) {
+//                    currentUser = new CurrentUser(mResponse.getUserID(),mResponse.getPassword(),
+//                            mResponse.getName(),mResponse.getBirth(),mResponse.getType());
+//
+//                    BusProvider.getInstance().post(new ServerEvent(response.body()));
+//                }
+
                 currentUser = new CurrentUser(mResponse.getUserID(),mResponse.getPassword(),
                         mResponse.getName(),mResponse.getBirth(),mResponse.getType());
 
-//                Intent intent = new Intent(mContext,ListActivity.class);
-//                mContext.startActivity(intent);
-
                 BusProvider.getInstance().post(new ServerEvent(response.body()));
+
                 Log.d(TAG,"isSuccessful:"+bool.toString());
                 Log.e(TAG,"POstSuccess");
             }
