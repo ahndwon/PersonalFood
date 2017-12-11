@@ -11,7 +11,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.team11.personalfood.Models.CurrentUser;
-import com.team11.personalfood.Post.Communicator;
 import com.team11.personalfood.Utilities.Client;
 
 import java.text.ParseException;
@@ -39,7 +38,6 @@ public class SignupActivity extends BaseActivity {
     private String userType = "태양인";
     private Button buttonInsert;
 
-    private Communicator communicator;
     private Calendar calendar;
     private Date convertedDate;
 
@@ -55,7 +53,6 @@ public class SignupActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        communicator = new Communicator(this);
 
         registerButton = findViewById(R.id.btn_register);
         mFieldId = findViewById(R.id.field_id);
@@ -101,12 +98,7 @@ public class SignupActivity extends BaseActivity {
                 birth = mFieldBirth.getText().toString();
                 setType();
 
-//                loginClient.InsertData task = new Client.InsertData();
-//                task.execute(userId, password, name, birth, userType);userType
-//                signupClient.startSignup(userId, password, name, birth, userType);
-
                 signupClient.startSignup(userId,password,name,birth,userType);
-//                useJoinPost(userId, password,name,birth , userType);
 
                 Intent intent = new Intent(getApplicationContext(),ListActivity.class);
                 startActivity(intent);
@@ -120,12 +112,6 @@ public class SignupActivity extends BaseActivity {
             }
         });
 
-//        SimpleDateFormat fmt = new SimpleDateFormat("MM-dd-yyyy HH:mm");
-//        Date inputDate = fmt.parse("10-22-2011 01:00");
-
-//        Create the MySQL datetime string
-//        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        String date = fmt.format(inputDate);
     }
 
     public void setType() {
@@ -147,12 +133,6 @@ public class SignupActivity extends BaseActivity {
     }
 
 
-//    public void onRegisterBtnClick(View view) {
-//        Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-//        startActivity(intent);
-//    }
-
-
     private void updateDateLabel() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -161,10 +141,4 @@ public class SignupActivity extends BaseActivity {
 
 
     }
-
-    private void useJoinPost(String username, String password, String name, String birth, String type){
-        communicator.joinPost(username, password, name, birth,type);
-    }
-
-
 }

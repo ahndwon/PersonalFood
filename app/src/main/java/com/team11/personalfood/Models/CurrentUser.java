@@ -6,18 +6,20 @@ package com.team11.personalfood.Models;
 
 public class CurrentUser {
 
-    private String userID;
-    private String password;
-    private String name;
-    private String birth;
-    private String type;
+    public String userID ;
+    public String password;
+    public String name;
+    public String birth;
+    public String type;
 
-    public CurrentUser(String userID, String password, String name, String birth, String type){
-        this.userID = userID;
-        this.password = password;
-        this.name = name;
-        this.birth = birth;
-        this.type = type;
+    //String userID, String password, String name, String birth, String type
+
+    public CurrentUser(){
+//        this.userID = userID;
+//        this.password = password;
+//        this.name = name;
+//        this.birth = birth;
+//        this.type = type;
     }
 
     public String getUserID() {

@@ -34,7 +34,7 @@ public class Client {
 
     private LoginData loginData;
     private InsertData insertData;
-    private static CurrentUser currentUser;
+    public final static CurrentUser currentUser = new CurrentUser();
 
     String userId;
     String password;
@@ -49,6 +49,7 @@ public class Client {
     public Client(Context context) {
         this.mContext = context;
         mArrayList = new ArrayList<>();
+//        currentUser = new CurrentUser();
 
 //        GetData task = new GetData();
 //        task.execute(url);
@@ -58,7 +59,6 @@ public class Client {
         new GetData(onFoodLoadListener).execute(url);
 //        GetData task = new GetData();
 //        task.execute(url);
-
     }
 
     private class GetData extends AsyncTask<String, Void, String> {
@@ -200,7 +200,6 @@ public class Client {
                     filteredHashMap.put(TAG_POSITIVE_INGREDIENT, "");
 
                 }
-
                 if (negativeString.length() > 0 || positiveString.length() > 0) {
                     filteredHashMap.put(TAG_FOOD_URL, foodUrl);
                     mArrayList.add(filteredHashMap);
@@ -324,13 +323,8 @@ public class Client {
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
-//                httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//                httpURLConnection.setRequestProperty("content-type", "application/json");
                 httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-
                 httpURLConnection.setRequestProperty("Accept", "application/json");
-//                httpURLConnection.setRequestProperty("Accept", "application/x-www-form-urlencoded");
-//                httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                 httpURLConnection.setDoInput(true);
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.connect();
@@ -409,48 +403,46 @@ public class Client {
 
             Log.d(TAG, "response  - " + result);
 
-            JSONObject mJson = resultToJson(result);
             try {
-                currentUser.setUserID(mJson.getJSONArray("userID").toString());
-                Log.d(TAG,"mJson.getJSONArray(\"userID\").toString() - " + mJson.getJSONArray("userID").toString());
+                JSONObject parser = new JSONObject(result.substring(1,result.length()-1));
+
+                currentUser.setUserID(parser.getString("UserID"));
+                currentUser.setPassword(parser.getString("Password"));
+                currentUser.setName(parser.getString("Name"));
+                currentUser.setBirth(parser.getString("Birth"));
+                currentUser.setType(parser.getString("Type"));
+                Log.d(TAG,"currentUser.getUserID() - " + currentUser.getUserID());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             if (result == null) {
-
                 Log.d(TAG, errorString);
             } else {
 
             }
+
+//            Intent intent = new Intent(getApplicationContext(),ListActivity.class);
+//        startActivity(intent);
             Log.d(TAG, "POST response  - " + result);
         }
-
 
         @Override
         protected String doInBackground(String... params) {
 
-//            String userID = params[0];
-//            String password = params[1];
-//            String name = params[2];
-//            String birth = params[3];
-//            String type = params[4];
+            String userID = params[0];
+            String password = params[1];
 
             String serverURL = "http://13.230.142.157:8080/a/users/login/";
 
-
-//            Log.d(TAG, "UserID=" + "dongwonS2" + "&Password=" + "123456");
             try {
-
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
 
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
                 httpURLConnection.setRequestMethod("POST");
-//
                 httpURLConnection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
                 httpURLConnection.setRequestProperty("Accept", "application/json");
                 httpURLConnection.setDoInput(true);
@@ -468,12 +460,10 @@ public class Client {
                 outputStream.flush();
                 outputStream.close();
 
-
                 int responseStatusCode = httpURLConnection.getResponseCode();
                 Log.d(TAG, "POST response message - " + httpURLConnection.getResponseMessage());
 
                 Log.d(TAG, "POST response code - " + responseStatusCode);
-
 
                 InputStream inputStream;
                 if (responseStatusCode == HttpURLConnection.HTTP_OK) {
@@ -481,8 +471,6 @@ public class Client {
                 } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
-
-
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -493,12 +481,9 @@ public class Client {
                     sb.append(line);
                 }
 
-
                 bufferedReader.close();
 
-
                 return sb.toString();
-
 
             } catch (Exception e) {
 
@@ -525,9 +510,11 @@ public class Client {
         JSONObject parser = null;
         try {
             parser = new JSONObject(response);
+            String userID = parser.getString("UserID");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.d(TAG,"parser - " + parser);
         return parser;
     }
 

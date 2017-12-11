@@ -2,7 +2,6 @@ package com.team11.personalfood.Utilities;
 
 import android.util.Log;
 
-import com.team11.personalfood.Post.Communicator;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -18,7 +18,6 @@ import android.widget.EditText;
 import com.team11.personalfood.Models.CurrentUser;
 import com.team11.personalfood.Models.Food;
 import com.team11.personalfood.Models.FoodModel;
-import com.team11.personalfood.Post.Communicator;
 import com.team11.personalfood.Utilities.Client;
 import com.team11.personalfood.Utilities.FoodListRecyclerAdapter;
 import com.team11.personalfood.Utilities.OnFoodLoadListener;
@@ -37,6 +36,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private static final String TAG_POSITIVE_INGREDIENT = "Positive_Ingredient";
     private static final String TAG_NEGATIVE_INGREDIENT = "Negative_Ingredient";
     private static final String TAG_FOOD_URL = "Food_URL";
+    private static final String CONSTITUTION_URL = "http://13.230.142.157:8080/a/constitution/";
 
     private RecyclerView foodListRecyclerView;
     private EditText searchEditText;
@@ -75,11 +75,13 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private Client etcClient;
     private Client searchClient;
 
+    private String userType;
+
     private int counter= 0;
+    private String mUrl;
 
     public static Context listActivityContext;
 
-    private String currentUserType;
 
 
     private ArrayList<HashMap<String, String>> mArrayList;
@@ -89,13 +91,16 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        CurrentUser currentUser = Client.currentUser;
+        System.out.println("here: "+currentUser.getUserID());
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
         setSupportActionBar(toolbar);
 
         listActivityContext = this;
 
-
+        userType = Client.currentUser.type;
         foodListRecyclerView = findViewById(R.id.foodList_recyclerView);
         searchEditText = findViewById(R.id.search_editText);
 
@@ -132,22 +137,25 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         etcClient = new Client(this);
         searchClient = new Client(this);
 
+        mUrl = CONSTITUTION_URL + Client.currentUser.type;
+        Log.d(TAG,"mURL - " + mUrl);
+        Log.d(TAG,"userType - " + userType);
+        typeClient.getData(mUrl);
+//        typeClient.getData("http://13.230.142.157:8080/a/constitution/태음인");
+        allCategoryClient.getData("http://13.230.142.157:8080/a/data/");
+        riceClient.getData("http://13.230.142.157:8080/a/data/밥-죽");
+        kimchiClient.getData("http://13.230.142.157:8080/a/data/김치-젓갈-장아찌");
+        breadClient.getData("http://13.230.142.157:8080/a/data/떡-빵-과자");
+        noodleClient.getData("http://13.230.142.157:8080/a/data/면류-만두");
+        saladClient.getData("http://13.230.142.157:8080/a/data/샐러드-수프");
+        iceCreamClient.getData("http://13.230.142.157:8080/a/data/음료류-빙과-유제품");
+        soupClient.getData("http://13.230.142.157:8080/a/data/국물요리");
+        pizzaClient.getData("http://13.230.142.157:8080/a/data/피자-스파게티-스테이크");
+        msgClient.getData("http://13.230.142.157:8080/a/data/장류-조미료-가루류");
+        sideDishClient.getData("http://13.230.142.157:8080/a/data/반찬");
+        sauceClient.getData("http://13.230.142.157:8080/a/data/ 잼-드레싱-소스");
+        etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
 
-//        typeClient.getData("http://13.230.142.157:8080/a/constitution/태양인");
-//        allCategoryClient.getData("http://13.230.142.157:8080/a/data/");
-//        riceClient.getData("http://13.230.142.157:8080/a/data/밥-죽");
-//        kimchiClient.getData("http://13.230.142.157:8080/a/data/김치-젓갈-장아찌");
-//        breadClient.getData("http://13.230.142.157:8080/a/data/떡-빵-과자");
-//        noodleClient.getData("http://13.230.142.157:8080/a/data/면류-만두");
-//        saladClient.getData("http://13.230.142.157:8080/a/data/샐러드-수프");
-//        iceCreamClient.getData("http://13.230.142.157:8080/a/data/음료류-빙과-유제품");
-//        soupClient.getData("http://13.230.142.157:8080/a/data/국물요리");
-//        pizzaClient.getData("http://13.230.142.157:8080/a/data/피자-스파게티-스테이크");
-//        msgClient.getData("http://13.230.142.157:8080/a/data/장류-조미료-가루류");
-//        sideDishClient.getData("http://13.230.142.157:8080/a/data/반찬");
-//        sauceClient.getData("http://13.230.142.157:8080/a/data/ 잼-드레싱-소스");
-//        etcClient.getData("http://13.230.142.157:8080/a/data/기타 요리별 레시피");
-//
 
         setUpFoodListView();
 
@@ -213,6 +221,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.allCategory_button:
+                    Log.d(TAG,"getType - " + Client.getCurrentUser().getType());
                     Log.d(TAG, "allCategoryBtn Clicked");
                     mArrayList = allCategoryClient.getFoodResult(typeClient.getTypeResult());
                     setFood();

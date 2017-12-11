@@ -60,8 +60,8 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     private Client client;
     private ChatClient chatClient;
     private ChatModel chatModel;
-    private String myID = "JJANgGU";
-    private String myType = "태음인";
+    private String myID;
+    private String myType;
 
 
     @Override
@@ -86,6 +86,9 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 //        client = new Client(this);
         chatModel.setOnChatLoadListener(this);
         chatModel.fetchChat();
+
+        myID = Client.getCurrentUser().getUserID();
+        myType = Client.getCurrentUser().getType();
 
         //팝업 토글 온클릭
         ImageButton.OnClickListener onClickListener = view -> {
@@ -154,7 +157,6 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 
         filterBtn.setOnClickListener(onClickListener);
 
-        //chatClient Thread
         new Thread() {
                     public void run() {
                         chatClient = new ChatClient();
@@ -162,17 +164,6 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                             Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
                         }
 
-
-//                        try {
-//                            chatClient = new ChatClient();
-//                            chatClient.connect();
-//                            if (chatClient.getOs() != null) {
-//                                Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
-//                            }
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//
-//                        }
                     }
                 }.start();
     }
