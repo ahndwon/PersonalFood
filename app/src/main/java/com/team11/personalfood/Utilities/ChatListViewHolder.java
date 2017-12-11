@@ -12,9 +12,6 @@ import com.team11.personalfood.R;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-/**
- * Created by andong-won on 2017. 12. 7..
- */
 
 public class ChatListViewHolder extends AbstractViewHolder<Chat> {
     private final SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("a h:mm", Locale.getDefault());
@@ -43,7 +40,7 @@ public class ChatListViewHolder extends AbstractViewHolder<Chat> {
         message.setText(item.getMessage());
     }
 
-    public String stringManipulation(String text){
+    private String stringManipulation(String text){
         String temp = "(" + text + ")";
         return temp;
     }

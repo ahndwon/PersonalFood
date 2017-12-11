@@ -51,6 +51,7 @@ public class Client {
     private Context mContext;
     private ArrayList<HashMap<String, String>> mArrayList;
     private String mJsonString;
+    private OnFoodLoadListener onFoodLoadListener;
 
 
     public Client(Context context) {
@@ -62,7 +63,7 @@ public class Client {
     }
 
     public void getData(String url) {
-        new GetData().execute(url);
+        new GetData(onFoodLoadListener).execute(url);
 //        GetData task = new GetData();
 //        task.execute(url);
     }
@@ -70,6 +71,12 @@ public class Client {
     private class GetData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         String errorString = null;
+        private OnFoodLoadListener onFoodLoadListener;
+
+        public GetData(OnFoodLoadListener onFoodLoadListener) {
+            this.onFoodLoadListener = onFoodLoadListener;
+
+        }
 
         @Override
         protected void onPreExecute() {

@@ -8,14 +8,11 @@ import com.team11.personalfood.Utilities.OnChatLoadListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by andong-won on 2017. 12. 7..
- */
 
 public class ChatModel {
     private static final String TAG = "ChatModel";
 
-    private List<Chat> chatList;
+    private static List<Chat> chatList;
     private OnChatLoadListener onChatLoadListener;
     private String userId;
     private String type;
@@ -38,13 +35,12 @@ public class ChatModel {
     }
 
     public void fetchChat(){
-        List<Chat> mChatList = new ArrayList<>();
-        mChatList = chatList;
 
         if(onChatLoadListener != null){
-            onChatLoadListener.onFetchChat(mChatList);
+            onChatLoadListener.onFetchChat(chatList);
         }
     }
+
     public void addChat(String userId, String type, String message){
 //        chatList = new ArrayList<>();
         Chat mChat = new Chat(userId,type,message);

@@ -3,11 +3,10 @@ package com.team11.personalfood.Utilities;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-/**
- * Created by andong-won on 2017. 12. 7..
- */
+import com.team11.personalfood.Models.Chat;
 
-public class ChatListRecyclerAdapter extends AbstractRecyclerAdapter {
+
+public class ChatListRecyclerAdapter extends AbstractRecyclerAdapter<Chat> {
     @Override
     public AbstractViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ChatListViewHolder(parent);
