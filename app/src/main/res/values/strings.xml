@@ -1,33 +1,159 @@
 <resources>
     <string name="app_name"></string>
 
-    <string name="question1">내 체질 무엇</string>
+    <string name="question1">체중</string>
 
-    <string name="answer1.1">태양</string>
-    <string name="answer1.2">태음</string>
-    <string name="answer1.3">소양</string>
-    <string name="answer1.4">소음</string>
+    <string name="answer1.1">표준</string>
+    <string name="answer1.2">표준 이상</string>
+    <string name="answer1.3">표준</string>
+    <string name="answer1.4">표준 이하</string>
 
-    <string name="question2">지나 체질 무엇</string>
+    <string name="question2">체격</string>
 
-    <string name="answer2.1">태양</string>
-    <string name="answer2.2">태음</string>
-    <string name="answer2.3">소양</string>
-    <string name="answer2.4">소음</string>
+    <string name="answer2.1">보통</string>
+    <string name="answer2.2">큰 편</string>
+    <string name="answer2.3">단단하면서 보통</string>
+    <string name="answer2.4">가늘다</string>
 
-    <string name="question3">한나 체질 무엇</string>
+    <string name="question3">땀</string>
 
-    <string name="answer3.1">태양</string>
-    <string name="answer3.2">태음</string>
-    <string name="answer3.3">소양</string>
-    <string name="answer3.4">소음</string>
+    <string name="answer3.1">보통이다</string>
+    <string name="answer3.2">많이 난다</string>
+    <string name="answer3.3">잠잘 때 많이 난다</string>
+    <string name="answer3.4">거의 나지 않는다</string>
 
-    <string name="question4">동원 체질 무엇</string>
+    <string name="question4">물 마시기</string>
 
-    <string name="answer4.1">태양</string>
-    <string name="answer4.2">태음</string>
-    <string name="answer4.3">소양</string>
-    <string name="answer4.4">소음</string>
+    <string name="answer4.1">보통이다</string>
+    <string name="answer4.2">좋아한다</string>
+    <string name="answer4.3">보통이다</string>
+    <string name="answer4.4">싫어한다</string>
+
+    <string name="question5">얼굴</string>
+
+    <string name="answer5.1">눈빛이 매섭다</string>
+    <string name="answer5.2">둥글다</string>
+    <string name="answer5.3">날카롭다</string>
+    <string name="answer5.4">갸름하다</string>
+
+    <string name="question6">걸음걸이</string>
+
+    <string name="answer6.1">성큼성큼 걷는다</string>
+    <string name="answer6.2">의젓하다</string>
+    <string name="answer6.3">몸을 흔든다</string>
+    <string name="answer6.4">자연스럽다</string>
+
+    <string name="question7">성격</string>
+
+    <string name="answer7.1">통이 크다</string>
+    <string name="answer7.2">속이 엉큼하다</string>
+    <string name="answer7.3">즉흥적이다</string>
+    <string name="answer7.4">여성적이다</string>
+
+    <string name="question8">좋아하는 음식</string>
+
+    <string name="answer8.1">야채가 좋다</string>
+    <string name="answer8.2">육식, 밀가루음식</string>
+    <string name="answer8.3">밥을 좋아한다</string>
+    <string name="answer8.4">생선 빼고 다 좋다</string>
+
+    <string name="question9">음식습관</string>
+
+    <string name="answer9.1">해산물이 좋다</string>
+    <string name="answer9.2">얼큰해야 좋다</string>
+    <string name="answer9.3">뜨거우면 싫다</string>
+    <string name="answer9.4">뜨거워야 좋다</string>
+
+    <string name="question10">목소리</string>
+
+    <string name="answer10.1">우렁차다</string>
+    <string name="answer10.2">탁하거나 부드럽다</string>
+    <string name="answer10.3">목소리 톤이 쉽게 높아진다</string>
+    <string name="answer10.4">작고 조용하다</string>
+
+    <string name="question11">잠</string>
+
+    <string name="answer11.1">일찍 잔다</string>
+    <string name="answer11.2">어디서나 잘 잔다</string>
+    <string name="answer11.3">일찍 일어난다</string>
+    <string name="answer11.4">잠들기 어렵다</string>
+
+    <string name="question12">술</string>
+
+    <string name="answer12.1">많이 마시면 술주정이 있다</string>
+    <string name="answer12.2">아주 좋아하지만 술주정은 없다</string>
+    <string name="answer12.3">빨리 취한다</string>
+    <string name="answer12.4">분위기에 따라 마시는 양이 다르다</string>
+
+    <string name="question13">대인관계</string>
+
+    <string name="answer13.1">한 번 만나면 십년 친구가 된다</string>
+    <string name="answer13.2">원만하다</string>
+    <string name="answer13.3">잘 해주고 욕먹는다</string>
+    <string name="answer13.4">오래된 친구만 좋다</string>
+
+    <string name="question14">심리</string>
+
+    <string name="answer14.1">변덕이 심하다</string>
+    <string name="answer14.2">형식을 좋아한다</string>
+    <string name="answer14.3">아부를 못한다</string>
+    <string name="answer14.4">치밀하고 꼼꼼하다</string>
+
+    <string name="question15">이목구비 생김새</string>
+
+    <string name="answer15.1">광대뼈가 크거나 눈빛이 맑다</string>
+    <string name="answer15.2">눈이 크거나 입술이 두텁다</string>
+    <string name="answer15.3">턱이 뾰족하거나 윗입술이 얇다</string>
+    <string name="answer15.4">눈이 동그랗다</string>
+
+    <string name="question16">말투</string>
+
+    <string name="answer16.1">허풍이 심하다</string>
+    <string name="answer16.2">더듬거나 천천히 말한다</string>
+    <string name="answer16.3">과장해서 말한다</string>
+    <string name="answer16.4">가끔 한마디하면 똑부러진다</string>
+
+    <string name="question17">몸 특징</string>
+
+    <string name="answer17.1">체력이 좋아 쉽게 지치지 않는다</string>
+    <string name="answer17.2">눈이 자주 아프다</string>
+    <string name="answer17.3">방귀를 많이 뀐다</string>
+    <string name="answer17.4">신경을 많이 쓰면 입맛이 없다</string>
+
+    <string name="question18">피부</string>
+
+    <string name="answer18.1">두껍고 단단하다</string>
+    <string name="answer18.2">거칠거나 두껍다</string>
+    <string name="answer18.3">매끈하고 탄력 있다</string>
+    <string name="answer18.4">부드럽다</string>
+
+    <string name="question19">생리현상</string>
+
+    <string name="answer19.1">소변 양이 많다</string>
+    <string name="answer19.2">땀을 흘리면 기분이 좋다</string>
+    <string name="answer19.3">대변은 하루 한 번 꼭 본다</string>
+    <string name="answer19.4">소화가 잘 안된다</string>
+
+    <string name="question20">비슷한 동물</string>
+
+    <string name="answer20.1">호랑이</string>
+    <string name="answer20.2">소</string>
+    <string name="answer20.3">말</string>
+    <string name="answer20.4">사슴</string>
+
+    <string name="question21">가치기준</string>
+
+    <string name="answer21.1">술</string>
+    <string name="answer21.2">돈</string>
+    <string name="answer21.3">사랑</string>
+    <string name="answer21.4">지위</string>
+
+    <string name="question22">사회생활</string>
+
+    <string name="answer22.1">만사</string>
+    <string name="answer22.2">협상을 잘한다</string>
+    <string name="answer22.3">거의 중간을 유지한다</string>
+    <string name="answer22.4">사람들을 잘 어루만져준다</string>
 
     <string name="search_food"><font fgcolor="#FFFFFF">음식명을 입력하세요</font></string>
 </resources>
