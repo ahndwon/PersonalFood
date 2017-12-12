@@ -187,11 +187,10 @@ public class ChatClient {
                     jsonObject.put("message", message);
 
                     byte[] setMsg = jsonObject.toString().getBytes();
-//                    dos.writeInt(setMsg.length);
-//                    dos.write(setMsg);
 
-//                    os.writeInt(setMsg.length);
                     os.write(setMsg);
+                    os.flush();
+//                    os.close();
                     Log.d(TAG, "sended message - " +jsonObject.toString());
 
                     bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -210,12 +209,7 @@ public class ChatClient {
                 }
             }
         }.start();
-//        String message = "[{"+"userID:"+"dongwonS2"+","+"protocol:"+"message"+","+
-//                "type:"+"태음인"+","+"message:"+"회원가입 왜 안되냐"+"}]";
-//        byte[] setMsg = message.getBytes();
-//        dos.writeInt(setMsg.length);
-//        dos.write(setMsg);
-//        Log.d(TAG,"sended message");
+//
     }
 
 }

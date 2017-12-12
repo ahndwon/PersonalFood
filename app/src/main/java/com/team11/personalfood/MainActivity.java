@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
         });
 
         loginButton = findViewById(R.id.login_button);
-        signupButton = findViewById(R.id.signUp_button);
+//        signupButton = findViewById(R.id.signUp_button);
     }
 
     public void onLoginBtnClick(View view) {

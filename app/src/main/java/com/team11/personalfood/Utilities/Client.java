@@ -4,8 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.team11.personalfood.LoginActivity;
 import com.team11.personalfood.Models.CurrentUser;
+import com.team11.personalfood.SignupActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -297,8 +300,13 @@ public class Client {
             progressDialog.dismiss();
 
             Log.d(TAG, "POST response  - " + result);
-        }
 
+            if (result.equals("Bad Request")) {
+                Toast.makeText(mContext, "서버와 연결이 안되네요", Toast.LENGTH_SHORT);
+                SignupActivity.mErrorText.setText("서버와 연결이 안되네요");
+
+            }
+        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -409,7 +417,7 @@ public class Client {
 
             Log.d(TAG, "response  - " + result);
 
-            if(!result.equals("wrong login")){
+            if (!result.equals("wrong login")) {
                 try {
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject parser = jsonArray.getJSONObject(0);
@@ -421,7 +429,7 @@ public class Client {
                     user.setBirth(parser.getString("Birth"));
                     user.setType(parser.getString("Type"));
 
-                    Log.d(TAG,"currentUser.getUserID() - " + user.getUserID());
+                    Log.d(TAG, "currentUser.getUserID() - " + user.getUserID());
 
                     onLoginListener.onSuccess(user);
 
@@ -435,7 +443,6 @@ public class Client {
 
                 }
             }
-
 
 
 //            Intent intent = new Intent(getApplicationContext(),ListActivity.class);
@@ -530,7 +537,7 @@ public class Client {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG,"parser - " + parser);
+        Log.d(TAG, "parser - " + parser);
         return parser;
     }
 }

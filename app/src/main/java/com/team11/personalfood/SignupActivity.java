@@ -2,24 +2,25 @@ package com.team11.personalfood;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.team11.personalfood.Models.CurrentUser;
 import com.team11.personalfood.Utilities.Client;
+import com.team11.personalfood.Utilities.OnLoginListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class SignupActivity extends BaseActivity {
+public class SignupActivity extends BaseActivity implements OnLoginListener {
 
     private static final String TAG = "SignupActivity";
     private static final int TAEYANG = 1;
@@ -27,6 +28,7 @@ public class SignupActivity extends BaseActivity {
     private static final int SOYANG = 3;
     private static final int SOEUM = 4;
 
+    public static TextView mErrorText;
     private Button registerButton;
 
     public CurrentUser currentUser;
@@ -36,7 +38,7 @@ public class SignupActivity extends BaseActivity {
     private EditText mFieldPassword;
     private EditText mFieldBirth;
     private String userType = "태양인";
-    private Button buttonInsert;
+    private Button signUpBtn;
 
     private Calendar calendar;
     private Date convertedDate;
@@ -46,7 +48,10 @@ public class SignupActivity extends BaseActivity {
     private String name;
     private String birth;
 
-    private Client signupClient;
+    private Client client;
+
+    private CurrentUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +64,15 @@ public class SignupActivity extends BaseActivity {
         mFieldName = findViewById(R.id.field_name);
         mFieldPassword = findViewById(R.id.field_password);
         mFieldBirth = findViewById(R.id.field_birth);
-        buttonInsert = findViewById(R.id.btn_register);
+        signUpBtn = findViewById(R.id.btn_register);
 
-        signupClient = new Client(this);
+        client = new Client(this);
 
         calendar = Calendar.getInstance();
-        signupClient = new Client(this);
+        client = new Client(this);
 
+        user = new CurrentUser();
+        mErrorText = findViewById(R.id.textview_error);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -89,29 +96,29 @@ public class SignupActivity extends BaseActivity {
             }
         });
 
-        buttonInsert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userId = mFieldId.getText().toString();
-                password = mFieldPassword.getText().toString();
-                name = mFieldName.getText().toString();
-                birth = mFieldBirth.getText().toString();
-                setType();
+    }
 
-                signupClient.startSignup(userId,password,name,birth,userType);
+    public void onSignupBtnClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(),ListActivity.class);
-                startActivity(intent);
+        if(!validateForm()) {
+            return;
+        }
+        userId = mFieldId.getText().toString();
+        password = mFieldPassword.getText().toString();
+        name = mFieldName.getText().toString();
+        birth = mFieldBirth.getText().toString();
+        setType();
 
-                mFieldId.setText("");
-                mFieldPassword.setText("");
-                mFieldName.setText("");
-                mFieldBirth.setText("");
+        client.startSignup(userId, password, name, birth, userType);
+        client.startLogin(userId, password, this);
 
+//                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+//                startActivity(intent);
 
-            }
-        });
-
+        mFieldId.setText("");
+        mFieldPassword.setText("");
+        mFieldName.setText("");
+        mFieldBirth.setText("");
     }
 
     public void setType() {
@@ -136,9 +143,56 @@ public class SignupActivity extends BaseActivity {
     private void updateDateLabel() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        String selectedDate = sdf.format(calendar.getTime());
         mFieldBirth.setText(sdf.format(calendar.getTime()));
-
-
     }
+
+    @Override
+    public void onSuccess(CurrentUser user) {
+        Intent intent = new Intent(getApplicationContext(),ListActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+        System.out.println("SignUp Auto Login"+user.getName());
+    }
+
+
+    private boolean validateForm() {
+        boolean valid = true;
+
+        String id = mFieldId.getText().toString();
+        if (TextUtils.isEmpty(id)) {
+            mFieldId.setError("아이디를 입력해주세요");
+            valid = false;
+        } else {
+            mFieldId.setError(null);
+        }
+
+        String password = mFieldPassword.getText().toString();
+        if (TextUtils.isEmpty(password)) {
+            mFieldPassword.setError("비밀번호를 입력해주세요");
+            valid = false;
+        } else {
+            mFieldPassword.setError(null);
+        }
+
+        String name = mFieldName.getText().toString();
+        if (TextUtils.isEmpty(name)) {
+            mFieldName.setError("이름을 입력해주세요");
+            valid = false;
+        } else {
+            mFieldName.setError(null);
+        }
+
+        String birth = mFieldBirth.getText().toString();
+        if (TextUtils.isEmpty(birth)) {
+            mFieldBirth.setError("생일을 입력해주세요");
+            valid = false;
+        } else {
+            mFieldBirth.setError(null);
+        }
+
+        return valid;
+    }
+
+
+
 }

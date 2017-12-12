@@ -66,10 +66,10 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="10"
                     android:background="@color/colorChatBottom"
+                    android:hint="입력해주세요~"
                     android:inputType="textMultiLine"
                     android:paddingEnd="5dp"
-                    android:paddingStart="10dp"
-                    android:text="text" />
+                    android:paddingStart="10dp" />
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/send_message_btn"

@@ -300,16 +300,12 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
                         Log.d(TAG, "searchBtn counter 1");
                         mArrayList = searchClient.getFoodResult(typeClient.getTypeResult());
                         for(int i = 0 ; i < searchClient.getmArrayList().size(); i++){
-//                        System.out.println("searchClient" + searchClient.getmArrayList().get(i));
                             Log.d(TAG, "SearchBtn searchClient - " + searchClient.getmArrayList().get(i));
                         }
                         setFood();
                         counter = 0;
                     }
 
-
-//                    mArrayList = searchClient.getFoodResult(typeClient.getTypeResult());
-//                    setFood();
                     break;
             }
         }

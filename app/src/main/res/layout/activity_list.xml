@@ -12,7 +12,7 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="225dp"
+        android:layout_width="205dp"
         android:layout_height="38dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
@@ -33,7 +33,6 @@
             android:inputType="text"
             android:maxLines="1"
             android:padding="10dp"
-            android:text="멸치국수"
             android:textColor="@color/colorDarkGray"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -311,7 +310,7 @@
 
     <Button
         android:id="@+id/etcCategory_button"
-        android:layout_width="52dp"
+        android:layout_width="70dp"
         android:layout_height="25dp"
         android:background="@android:color/transparent"
         android:text="기타 요리"
@@ -323,7 +322,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/sauceCategory_button"
         app:layout_constraintTop_toBottomOf="@+id/sauceCategory_button"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0" />
 
 
 

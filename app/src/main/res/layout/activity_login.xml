@@ -19,6 +19,13 @@
             android:background="@drawable/body_type_img"
             android:layout_marginBottom="40dp"/>
 
+        <TextView
+            android:id="@+id/textview_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorBad" />
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

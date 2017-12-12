@@ -44,6 +44,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.65999997" />
 
+
+    <!--
     <Button
         android:id="@+id/signUp_button"
         android:layout_width="wrap_content"
@@ -62,5 +64,5 @@
         app:layout_constraintTop_toBottomOf="@+id/login_button"
         app:layout_constraintVertical_bias="0.0" />
 
-
+        -->
 </android.support.constraint.ConstraintLayout>
