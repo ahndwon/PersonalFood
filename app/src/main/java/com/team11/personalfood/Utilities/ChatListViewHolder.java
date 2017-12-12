@@ -43,17 +43,21 @@ public class ChatListViewHolder extends AbstractViewHolder<Chat> {
 
     @Override
     public void onBindView(@NonNull Chat item, int position) {
-//        if(item.getUserId().equals(myName)){
-//            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-//            layoutParams.gravity = Gravity.RIGHT;
-//            userId.setLayoutParams(layoutParams);
-//            userType.setLayoutParams(layoutParams);
-//            message.setLayoutParams(layoutParams);
-//
-//        }
+        ConstraintLayout constraintLayout = itemView.findViewById(R.id.chatLayout);
+        int align;
+        if(item.getUserId().equals(myName)){
+            align = Gravity.RIGHT;
+
+        }else
+            align = Gravity.LEFT;
+//        constraintLayout.setForegroundGravity(align);
+
         userId.setText(item.getUserId());
         userType.setText(stringManipulation(item.getUserType()));
         message.setText(item.getMessage());
+
+        constraintLayout.setTextAlignment(align);
+
     }
 
     private String stringManipulation(String text){

@@ -1,22 +1,18 @@
 package com.team11.personalfood;
 
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.squareup.otto.Produce;
-
+import com.team11.personalfood.Models.CurrentUser;
 import com.team11.personalfood.Utilities.Client;
+import com.team11.personalfood.Utilities.OnLoginListener;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements OnLoginListener {
 
 
-    private Button loginButton;
     private EditText mLogin;
     private EditText mPassword;
 
@@ -33,13 +29,19 @@ public class LoginActivity extends BaseActivity {
 
         mLogin = findViewById(R.id.field_login_id);
         mPassword= findViewById(R.id.field_login_password);
-        loginButton = findViewById(R.id.real_login_button);
+        Button loginButton = findViewById(R.id.real_login_button);
     }
 
     public void onRealLoginBtnClick(View view) {
-        client.startLogin(mLogin.getText().toString(), mPassword.getText().toString());
-//        Intent intent = new Intent(getApplicationContext(),ListActivity.class);
-//        startActivity(intent);
+        client.startLogin(mLogin.getText().toString(), mPassword.getText().toString(), this);
     }
 
+    @Override
+    public void onSuccess(CurrentUser user) {
+        Intent intent = new Intent(getApplicationContext(),ListActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+        System.out.println("Login"+user.getName());
+
+    }
 }

@@ -21,12 +21,13 @@ import com.team11.personalfood.Models.FoodModel;
 import com.team11.personalfood.Utilities.Client;
 import com.team11.personalfood.Utilities.FoodListRecyclerAdapter;
 import com.team11.personalfood.Utilities.OnFoodLoadListener;
+import com.team11.personalfood.Utilities.OnLoginListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ListActivity extends BaseActivity implements OnFoodLoadListener {
+public class ListActivity extends BaseActivity implements OnFoodLoadListener{
 
 
     private static final String TAG = "ListActivity";
@@ -76,7 +77,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     private Client searchClient;
 
     private String userType;
-
+    private CurrentUser user;
     private int counter= 0;
     private String mUrl;
 
@@ -90,9 +91,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        CurrentUser currentUser = Client.currentUser;
-        System.out.println("here: "+currentUser.getUserID());
+        user = (CurrentUser) getIntent().getSerializableExtra("user");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
@@ -100,7 +99,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
 
         listActivityContext = this;
 
-        userType = Client.currentUser.type;
+        userType = user.getType();
         foodListRecyclerView = findViewById(R.id.foodList_recyclerView);
         searchEditText = findViewById(R.id.search_editText);
 
@@ -137,7 +136,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         etcClient = new Client(this);
         searchClient = new Client(this);
 
-        mUrl = CONSTITUTION_URL + Client.currentUser.type;
+        mUrl = CONSTITUTION_URL + user.getType();
         Log.d(TAG,"mURL - " + mUrl);
         Log.d(TAG,"userType - " + userType);
         typeClient.getData(mUrl);
@@ -187,6 +186,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         if (id == R.id.menu_chat) {
             Log.d(TAG, "menu chat button clicked");
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+            intent.putExtra("user", user);
             startActivity(intent);
         } else if (id == R.id.menu_back) {
             Log.d(TAG, "menu back button clicked");
@@ -216,12 +216,13 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener {
         adapter.notifyDataSetChanged();
     }
 
+
     class BtnOnClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.allCategory_button:
-                    Log.d(TAG,"getType - " + Client.getCurrentUser().getType());
+                    Log.d(TAG,"getType - " + user.getType());
                     Log.d(TAG, "allCategoryBtn Clicked");
                     mArrayList = allCategoryClient.getFoodResult(typeClient.getTypeResult());
                     setFood();

@@ -1,16 +1,15 @@
 package com.team11.personalfood.Models;
 
-/**
- * Created by andong-won on 2017. 12. 11..
- */
 
-public class CurrentUser {
+import java.io.Serializable;
 
-    public String userID ;
-    public String password;
-    public String name;
-    public String birth;
-    public String type;
+public class CurrentUser implements Serializable {
+
+    private String userID ;
+    private String password;
+    private String name;
+    private String birth;
+    private String type;
 
     //String userID, String password, String name, String birth, String type
 

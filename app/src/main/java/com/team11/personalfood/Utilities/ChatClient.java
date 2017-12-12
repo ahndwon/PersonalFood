@@ -3,7 +3,7 @@ package com.team11.personalfood.Utilities;
 import android.util.Log;
 
 import com.team11.personalfood.Models.Chat;
-import com.team11.personalfood.Post.Communicator;
+import com.team11.personalfood.Models.CurrentUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +73,7 @@ public class ChatClient {
     private String responseString = "";
     private JSONObject jsonObject;
     private OnChatLoadListener onChatLoadListener;
+    private CurrentUser user;
 
     private String myID = "JJANgGU";
     private String myType = "태음인";
@@ -135,11 +136,10 @@ public class ChatClient {
 
     public ChatClient(OnChatLoadListener onChatLoadListener) {
         this.onChatLoadListener = onChatLoadListener;
-        connect();
     }
 
 
-    public void connect(){
+    public void connect(String filterType, String userId){
 
         new Thread() {
             public void run() {
@@ -154,9 +154,9 @@ public class ChatClient {
 
                     jsonObject = new JSONObject();
 
-                    jsonObject.put("userID", myID);
+                    jsonObject.put("userID", userId);
                     jsonObject.put("protocol", "filter");
-                    jsonObject.put("type", "");
+                    jsonObject.put("type", filterType);
 
                     byte[] setMsg = jsonObject.toString().getBytes();
                     os.write(setMsg);

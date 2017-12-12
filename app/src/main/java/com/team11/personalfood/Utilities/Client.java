@@ -34,7 +34,6 @@ public class Client {
 
     private LoginData loginData;
     private InsertData insertData;
-    public final static CurrentUser currentUser = new CurrentUser();
 
     String userId;
     String password;
@@ -385,6 +384,12 @@ public class Client {
     public class LoginData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         String errorString = null;
+        private OnLoginListener onLoginListener;
+        private CurrentUser user;
+
+        public void setOnLoginListener(OnLoginListener onLoginListener) {
+            this.onLoginListener = onLoginListener;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -398,30 +403,40 @@ public class Client {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            user = new CurrentUser();
 
             progressDialog.dismiss();
 
             Log.d(TAG, "response  - " + result);
 
-            try {
-                JSONObject parser = new JSONObject(result.substring(1,result.length()-1));
+            if(!result.equals("wrong login")){
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    JSONObject parser = jsonArray.getJSONObject(0);
+//                JSONObject parser = new JSONObject(result.substring(1,result.length()-1));
 
-                currentUser.setUserID(parser.getString("UserID"));
-                currentUser.setPassword(parser.getString("Password"));
-                currentUser.setName(parser.getString("Name"));
-                currentUser.setBirth(parser.getString("Birth"));
-                currentUser.setType(parser.getString("Type"));
-                Log.d(TAG,"currentUser.getUserID() - " + currentUser.getUserID());
+                    user.setUserID(parser.getString("UserID"));
+                    user.setPassword(parser.getString("Password"));
+                    user.setName(parser.getString("Name"));
+                    user.setBirth(parser.getString("Birth"));
+                    user.setType(parser.getString("Type"));
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    Log.d(TAG,"currentUser.getUserID() - " + user.getUserID());
+
+                    onLoginListener.onSuccess(user);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (result == null) {
+                    Log.d(TAG, errorString);
+                } else {
+
+                }
             }
 
-            if (result == null) {
-                Log.d(TAG, errorString);
-            } else {
 
-            }
 
 //            Intent intent = new Intent(getApplicationContext(),ListActivity.class);
 //        startActivity(intent);
@@ -495,8 +510,9 @@ public class Client {
         }
     }
 
-    public void startLogin(String userId, String password) {
+    public void startLogin(String userId, String password, OnLoginListener onLoginListener) {
         loginData = new LoginData();
+        loginData.setOnLoginListener(onLoginListener);
         loginData.execute(userId, password);
 
     }
@@ -516,9 +532,5 @@ public class Client {
         }
         Log.d(TAG,"parser - " + parser);
         return parser;
-    }
-
-    public static CurrentUser getCurrentUser() {
-        return currentUser;
     }
 }

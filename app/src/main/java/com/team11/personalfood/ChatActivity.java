@@ -26,10 +26,12 @@ import android.widget.ToggleButton;
 
 import com.team11.personalfood.Models.Chat;
 import com.team11.personalfood.Models.ChatModel;
+import com.team11.personalfood.Models.CurrentUser;
 import com.team11.personalfood.Utilities.ChatClient;
 import com.team11.personalfood.Utilities.ChatListRecyclerAdapter;
 import com.team11.personalfood.Utilities.Client;
 import com.team11.personalfood.Utilities.OnChatLoadListener;
+import com.team11.personalfood.Utilities.OnLoginListener;
 
 import org.w3c.dom.Text;
 
@@ -39,18 +41,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ChatActivity extends BaseActivity implements OnChatLoadListener {
+public class ChatActivity extends BaseActivity implements OnChatLoadListener{
     private static final String TAG = "ChatActivity";
-
-
 
     //View
     private ImageButton filterBtn;
-    private ToggleButton toggleTaeyangBtn;
-    private ToggleButton toggleTaeeumBtn;
-    private ToggleButton toggleSoyangBtn;
-    private ToggleButton toggleSoeumBtn;
-
     @BindView(R.id.send_message_btn)
     private Button sendMessageBtn;
 
@@ -62,15 +57,15 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     AppCompatEditText fieldMessage;
 
     private ChatClient chatClient;
-    private ChatModel chatModel;
-    private String myID;
-    private String myType;
+    private CurrentUser user = new CurrentUser();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        user = (CurrentUser) getIntent().getSerializableExtra("user");
 
         filterBtn = findViewById(R.id.filter_button);
         sendMessageBtn = findViewById(R.id.send_message_btn);
@@ -85,14 +80,13 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
 
 //        communicator = new Communicator(this);
 //        connectChatServer();
-        chatModel = new ChatModel();
+//        chatModel = new ChatModel();
 //        client = new Client(this);
-        chatModel.setOnChatLoadListener(this);
-        chatModel.fetchChat();
+//        chatModel.setOnChatLoadListener(this);
+//        chatModel.fetchChat();
         chatClient = new ChatClient(this);
+        chatClient.connect("", user.getUserID());
 
-        myID = Client.getCurrentUser().getUserID();
-        myType = Client.getCurrentUser().getType();
 
         //팝업 토글 온클릭
         ImageButton.OnClickListener onClickListener = view -> {
@@ -125,6 +119,42 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                     // show the popup window
                     popupWindow.showAtLocation(mainLayout, Gravity.CENTER, 0, 0);
 
+                    ToggleButton tae_yang = popupView.findViewById(R.id.toggle_taeyang);
+                    ToggleButton tae_eum = popupView.findViewById(R.id.toggle_taeeum);
+                    ToggleButton so_yang = popupView.findViewById(R.id.toggle_soyang);
+                    ToggleButton so_eum = popupView.findViewById(R.id.toggle_soeum);
+
+                    tae_yang.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            chatClient.connect("태양인", user.getUserID());
+                        }
+                    });
+
+                    tae_eum.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            chatClient.connect("태음인", user.getUserID());
+
+                        }
+                    });
+
+                    so_yang.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            chatClient.connect("소양인", user.getUserID());
+
+                        }
+                    });
+
+                    so_eum.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            chatClient.connect("소음인", user.getUserID());
+
+                        }
+                    });
+
                     dimBehind(popupWindow);
                     // dismiss the popup window when touched
                     popupView.setOnTouchListener(new View.OnTouchListener() {
@@ -150,7 +180,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
                 if (chatClient.getOs() != null) {
                     Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
                     try {
-                        chatClient.setMessage(myID, myType, fieldMessage.getText().toString());
+                        chatClient.setMessage(user.getUserID(), user.getType(), fieldMessage.getText().toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -223,7 +253,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     public void onFetchChat(List<Chat> chatList) {
 
         adapter.setItems(chatList);
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -231,5 +261,4 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener {
         adapter.addItem(chat);
 
     }
-
 }
