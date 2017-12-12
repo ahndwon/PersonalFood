@@ -42,22 +42,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
     private RecyclerView foodListRecyclerView;
     private EditText searchEditText;
     private FoodListRecyclerAdapter adapter;
-    private FoodModel foodModel;
-
-    private Button allCategoryBtn;
-    private Button riceCategoryBtn;
-    private Button kimchiCategoryBtn;
-    private Button breadCategoryBtn;
-    private Button noodleCategoryBtn;
-    private Button saladCategoryBtn;
-    private Button iceCreamCategoryBtn;
-    private Button soupCategoryBtn;
-    private Button pizzaCategoryBtn;
-    private Button msgCategoryBtn;
-    private Button sideDishCategoryBtn;
-    private Button sauceCategoryBtn;
-    private Button etcCategoryBtn;
-    private Button searchBtn;
 
 
     private Client typeClient;
@@ -76,13 +60,10 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
     private Client etcClient;
     private Client searchClient;
 
-    private String userType;
     private CurrentUser user;
     private int counter= 0;
-    private String mUrl;
 
     public static Context listActivityContext;
-
 
 
     private ArrayList<HashMap<String, String>> mArrayList;
@@ -99,24 +80,24 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
 
         listActivityContext = this;
 
-        userType = user.getType();
+        String userType = user.getType();
         foodListRecyclerView = findViewById(R.id.foodList_recyclerView);
         searchEditText = findViewById(R.id.search_editText);
 
-        allCategoryBtn = findViewById(R.id.allCategory_button);
-        riceCategoryBtn = findViewById(R.id.riceCategory_button);
-        kimchiCategoryBtn = findViewById(R.id.kimchiCategory_button);
-        breadCategoryBtn = findViewById(R.id.breadCategory_button);
-        noodleCategoryBtn = findViewById(R.id.noodleCategory_button);
-        saladCategoryBtn = findViewById(R.id.saladCategory_button);
-        iceCreamCategoryBtn = findViewById(R.id.iceCreamCategory_button);
-        soupCategoryBtn = findViewById(R.id.soupCategory_button);
-        pizzaCategoryBtn = findViewById(R.id.pizzaCategory_button);
-        msgCategoryBtn = findViewById(R.id.msgCategory_button);
-        sideDishCategoryBtn = findViewById(R.id.sideDishCategory_button);
-        sauceCategoryBtn = findViewById(R.id.sauceCategory_button);
-        etcCategoryBtn = findViewById(R.id.etcCategory_button);
-        searchBtn = findViewById(R.id.search_button);
+        Button allCategoryBtn = findViewById(R.id.allCategory_button);
+        Button riceCategoryBtn = findViewById(R.id.riceCategory_button);
+        Button kimchiCategoryBtn = findViewById(R.id.kimchiCategory_button);
+        Button breadCategoryBtn = findViewById(R.id.breadCategory_button);
+        Button noodleCategoryBtn = findViewById(R.id.noodleCategory_button);
+        Button saladCategoryBtn = findViewById(R.id.saladCategory_button);
+        Button iceCreamCategoryBtn = findViewById(R.id.iceCreamCategory_button);
+        Button soupCategoryBtn = findViewById(R.id.soupCategory_button);
+        Button pizzaCategoryBtn = findViewById(R.id.pizzaCategory_button);
+        Button msgCategoryBtn = findViewById(R.id.msgCategory_button);
+        Button sideDishCategoryBtn = findViewById(R.id.sideDishCategory_button);
+        Button sauceCategoryBtn = findViewById(R.id.sauceCategory_button);
+        Button etcCategoryBtn = findViewById(R.id.etcCategory_button);
+        Button searchBtn = findViewById(R.id.search_button);
 
         BtnOnClickListener btnOnClickListener = new BtnOnClickListener();
 
@@ -136,7 +117,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
         etcClient = new Client(this);
         searchClient = new Client(this);
 
-        mUrl = CONSTITUTION_URL + user.getType();
+        String mUrl = CONSTITUTION_URL + user.getType();
         Log.d(TAG,"mURL - " + mUrl);
         Log.d(TAG,"userType - " + userType);
         typeClient.getData(mUrl);
@@ -312,7 +293,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
     }
 
     public void setFood() {
-        foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME, TAG_FOOD_URL, TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
+         FoodModel foodModel = new FoodModel(mArrayList, TAG_FOOD_NAME, TAG_FOOD_URL, TAG_POSITIVE_INGREDIENT, TAG_NEGATIVE_INGREDIENT);
         foodModel.setOnFoodLoadListener(this);
         foodModel.fetchFood();
         mArrayList.clear();

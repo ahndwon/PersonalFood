@@ -3,7 +3,6 @@ package com.team11.personalfood.Utilities;
 import android.util.Log;
 
 import com.team11.personalfood.Models.Chat;
-import com.team11.personalfood.Models.CurrentUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,10 +72,6 @@ public class ChatClient {
     private String responseString = "";
     private JSONObject jsonObject;
     private OnChatLoadListener onChatLoadListener;
-    private CurrentUser user;
-
-    private String myID = "JJANgGU";
-    private String myType = "태음인";
 
     public OutputStream getOs() {
         return os;

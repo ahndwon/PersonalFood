@@ -41,7 +41,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class ChatActivity extends BaseActivity implements OnChatLoadListener{
+public class ChatActivity extends BaseActivity implements OnChatLoadListener {
     private static final String TAG = "ChatActivity";
 
     //View
@@ -72,8 +72,6 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener{
         fieldMessage = findViewById(R.id.field_message);
         chatListRecyclerView = findViewById(R.id.chatList_recyclerView);
 
-        setUpChatListView();
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
         setSupportActionBar(toolbar);
@@ -87,6 +85,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener{
         chatClient = new ChatClient(this);
         chatClient.connect("", user.getUserID());
 
+        setUpChatListView();
 
         //팝업 토글 온클릭
         ImageButton.OnClickListener onClickListener = view -> {
@@ -181,6 +180,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener{
                     Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
                     try {
                         chatClient.setMessage(user.getUserID(), user.getType(), fieldMessage.getText().toString());
+                        adapter.notifyDataSetChanged();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -189,8 +189,7 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener{
 //                Chat chat = new Chat(myID, myType, fieldMessage.getText().toString());
 
 
-
-                chatListRecyclerView.scrollToPosition(adapter.getItemCount()-1);
+                chatListRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
                 fieldMessage.setText("");
 
             }
@@ -205,13 +204,13 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener{
         filterBtn.setOnClickListener(onClickListener);
 
         new Thread() {
-                    public void run() {
-                        if (chatClient.getOs() != null) {
-                            Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
-                        }
+            public void run() {
+                if (chatClient.getOs() != null) {
+                    Log.d(TAG, " - DOS NOT NULL -" + chatClient.getOs());
+                }
 
-                    }
-                }.start();
+            }
+        }.start();
     }
 
 
@@ -251,14 +250,33 @@ public class ChatActivity extends BaseActivity implements OnChatLoadListener{
 
     @Override
     public void onFetchChat(List<Chat> chatList) {
-
         adapter.setItems(chatList);
-//        adapter.notifyDataSetChanged();
+        new Thread() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }.start();
     }
 
     @Override
     public void onAddChat(Chat chat) {
         adapter.addItem(chat);
-
+        new Thread() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }.start();
     }
 }
