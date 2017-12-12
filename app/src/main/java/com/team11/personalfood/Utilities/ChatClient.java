@@ -23,6 +23,7 @@ interface OnReaderListener {
 
 }
 
+//Reads Broadscasts from ChatServer
 class ReaderThread extends Thread {
     private InputStream is;
     private OnReaderListener onReaderListener;
@@ -63,6 +64,7 @@ class ReaderThread extends Thread {
     }
 }
 
+
 public class ChatClient {
     private static final String TAG = "ChatClient";
     private Socket socket;
@@ -73,9 +75,82 @@ public class ChatClient {
     private JSONObject jsonObject;
     private OnChatLoadListener onChatLoadListener;
 
-    public OutputStream getOs() {
-        return os;
+    public
+    ChatClient(OnChatLoadListener onChatLoadListener) {
+        this.onChatLoadListener = onChatLoadListener;
     }
+
+    //Connect to Server
+    public void connect(String filterType, String userId){
+
+        new Thread() {
+            public void run() {
+                try {
+                    socket = new Socket("13.230.142.157", 8081);
+                    os = socket.getOutputStream();
+
+                    boolean result = socket.isConnected();
+                    if (result) Log.d(TAG, "서버에 연결됨");
+                    else Log.d(TAG, "서버 연결 실패");
+                    os.flush();
+
+                    jsonObject = new JSONObject();
+
+                    jsonObject.put("userID", userId);
+                    jsonObject.put("protocol", "filter");
+                    jsonObject.put("type", filterType);
+
+                    byte[] setMsg = jsonObject.toString().getBytes();
+                    os.write(setMsg);
+
+                    readerThread = new ReaderThread(socket.getInputStream(), onReaderListener);
+                    readerThread.start();
+
+
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }.start();
+
+    }
+
+    //Send Message To Server
+    public void setMessage(String userId, String type, String message) throws IOException {
+        new Thread() {
+            public void run() {
+                try {
+
+                    jsonObject = new JSONObject();
+                    jsonObject.put("userID", userId);
+                    jsonObject.put("protocol", "message");
+                    jsonObject.put("type", type);
+                    jsonObject.put("message", message);
+
+                    byte[] setMsg = jsonObject.toString().getBytes();
+
+                    os.write(setMsg);
+                    os.flush();
+                    Log.d(TAG, "sended message - " +jsonObject.toString());
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    String str;
+
+                    Log.d(TAG, "buffered reader.readLine()- " + bufferedReader.readLine());
+                    Log.d(TAG, "buffered reader - " + bufferedReader.toString());
+                    Log.d(TAG, "buffered reader test- ");
+                    while ((str = bufferedReader.readLine()) != null) {
+                        responseString = str;
+                        Log.d(TAG, "From server - " + responseString);
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 
     private OnReaderListener onReaderListener = new OnReaderListener() {
         @Override
@@ -129,82 +204,8 @@ public class ChatClient {
         }
     };
 
-    public ChatClient(OnChatLoadListener onChatLoadListener) {
-        this.onChatLoadListener = onChatLoadListener;
-    }
-
-
-    public void connect(String filterType, String userId){
-
-        new Thread() {
-            public void run() {
-                try {
-                    socket = new Socket("13.230.142.157", 8081);
-                    os = socket.getOutputStream();
-
-                    boolean result = socket.isConnected();
-                    if (result) Log.d(TAG, "서버에 연결됨");
-                    else Log.d(TAG, "서버 연결 실패");
-                    os.flush();
-
-                    jsonObject = new JSONObject();
-
-                    jsonObject.put("userID", userId);
-                    jsonObject.put("protocol", "filter");
-                    jsonObject.put("type", filterType);
-
-                    byte[] setMsg = jsonObject.toString().getBytes();
-                    os.write(setMsg);
-
-                    readerThread = new ReaderThread(socket.getInputStream(), onReaderListener);
-                    readerThread.start();
-
-
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-
-                }
-            }
-        }.start();
-
-    }
-
-    public void setMessage(String userId, String type, String message) throws IOException {
-        new Thread() {
-            public void run() {
-                try {
-
-                    jsonObject = new JSONObject();
-
-                    jsonObject.put("userID", userId);
-                    jsonObject.put("protocol", "message");
-                    jsonObject.put("type", type);
-                    jsonObject.put("message", message);
-
-                    byte[] setMsg = jsonObject.toString().getBytes();
-
-                    os.write(setMsg);
-                    os.flush();
-//                    os.close();
-                    Log.d(TAG, "sended message - " +jsonObject.toString());
-
-                    bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    String str;
-
-                    Log.d(TAG, "buffered reader.readLine()- " + bufferedReader.readLine());
-                    Log.d(TAG, "buffered reader - " + bufferedReader.toString());
-                    Log.d(TAG, "buffered reader test- ");
-                    while ((str = bufferedReader.readLine()) != null) {
-//                        responseString.append(str);
-                        responseString = str;
-                        Log.d(TAG, "From server - " + responseString);
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-//
+    public OutputStream getOs() {
+        return os;
     }
 
 }

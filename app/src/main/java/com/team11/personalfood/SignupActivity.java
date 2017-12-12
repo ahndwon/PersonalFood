@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,23 +21,21 @@ import java.util.Locale;
 
 public class SignupActivity extends BaseActivity implements OnLoginListener {
 
+    //Constants
     private static final String TAG = "SignupActivity";
     private static final int TAEYANG = 1;
     private static final int TAEEUM = 2;
     private static final int SOYANG = 3;
     private static final int SOEUM = 4;
 
+    //View
     public static TextView mErrorText;
-    private Button registerButton;
-
-    public CurrentUser currentUser;
 
     private EditText mFieldId;
     private EditText mFieldName;
     private EditText mFieldPassword;
     private EditText mFieldBirth;
     private String userType = "태양인";
-    private Button signUpBtn;
 
     private Calendar calendar;
     private Date convertedDate;
@@ -58,20 +55,16 @@ public class SignupActivity extends BaseActivity implements OnLoginListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-
-        registerButton = findViewById(R.id.btn_register);
         mFieldId = findViewById(R.id.field_id);
         mFieldName = findViewById(R.id.field_name);
         mFieldPassword = findViewById(R.id.field_password);
         mFieldBirth = findViewById(R.id.field_birth);
-        signUpBtn = findViewById(R.id.btn_register);
 
         client = new Client(this);
 
         calendar = Calendar.getInstance();
         client = new Client(this);
 
-        user = new CurrentUser();
         mErrorText = findViewById(R.id.textview_error);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -86,7 +79,6 @@ public class SignupActivity extends BaseActivity implements OnLoginListener {
         };
 
         mFieldBirth.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: mDate");
@@ -111,9 +103,6 @@ public class SignupActivity extends BaseActivity implements OnLoginListener {
 
         client.startSignup(userId, password, name, birth, userType);
         client.startLogin(userId, password, this);
-
-//                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-//                startActivity(intent);
 
         mFieldId.setText("");
         mFieldPassword.setText("");
@@ -141,7 +130,7 @@ public class SignupActivity extends BaseActivity implements OnLoginListener {
 
 
     private void updateDateLabel() {
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         mFieldBirth.setText(sdf.format(calendar.getTime()));
     }
@@ -154,7 +143,7 @@ public class SignupActivity extends BaseActivity implements OnLoginListener {
         System.out.println("SignUp Auto Login"+user.getName());
     }
 
-
+    //정보입력 유무 체크
     private boolean validateForm() {
         boolean valid = true;
 
@@ -192,7 +181,4 @@ public class SignupActivity extends BaseActivity implements OnLoginListener {
 
         return valid;
     }
-
-
-
 }

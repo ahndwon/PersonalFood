@@ -1,14 +1,9 @@
 package com.team11.personalfood;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -75,52 +70,40 @@ public class TestActivity extends BaseActivity {
         }
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.leftarrow);
 
-        taeYangAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tests[currentQuestion].setType(TAEYANG);
-                currentQuestion++;
-                if(currentQuestion == tests.length){
-                    resultTest();
-                }else
-                    updateQuestion();
-            }
+        taeYangAnswerButton.setOnClickListener(view -> {
+            tests[currentQuestion].setType(TAEYANG);
+            currentQuestion++;
+            if(currentQuestion == tests.length){
+                resultTest();
+            }else
+                updateQuestion();
         });
 
-        taeEumAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tests[currentQuestion].setType(TAEEUM);
-                currentQuestion++;
-                if(currentQuestion == tests.length){
-                    resultTest();
-                }else
-                    updateQuestion();
-            }
+        taeEumAnswerButton.setOnClickListener(view -> {
+            tests[currentQuestion].setType(TAEEUM);
+            currentQuestion++;
+            if(currentQuestion == tests.length){
+                resultTest();
+            }else
+                updateQuestion();
         });
 
-        soYangAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tests[currentQuestion].setType(SOYANG);
-                currentQuestion++;
-                if(currentQuestion == tests.length){
-                    resultTest();
-                }else
-                    updateQuestion();
-            }
+        soYangAnswerButton.setOnClickListener(view -> {
+            tests[currentQuestion].setType(SOYANG);
+            currentQuestion++;
+            if(currentQuestion == tests.length){
+                resultTest();
+            }else
+                updateQuestion();
         });
 
-        soEumAnswerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tests[currentQuestion].setType(SOEUM);
-                currentQuestion++;
-                if(currentQuestion == tests.length){
-                    resultTest();
-                }else
-                    updateQuestion();
-            }
+        soEumAnswerButton.setOnClickListener(view -> {
+            tests[currentQuestion].setType(SOEUM);
+            currentQuestion++;
+            if(currentQuestion == tests.length){
+                resultTest();
+            }else
+                updateQuestion();
         });
 
         updateQuestion();

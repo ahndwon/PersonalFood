@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,14 +13,12 @@ import com.team11.personalfood.Utilities.OnLoginListener;
 
 public class LoginActivity extends BaseActivity implements OnLoginListener {
 
-
+    //View
     private EditText mLogin;
     private EditText mPassword;
     public static TextView mErrorText;
 
     private Client client;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +28,7 @@ public class LoginActivity extends BaseActivity implements OnLoginListener {
         client = new Client(this);
 
         mLogin = findViewById(R.id.field_login_id);
-        mPassword= findViewById(R.id.field_login_password);
-        Button loginButton = findViewById(R.id.real_login_button);
+        mPassword = findViewById(R.id.field_login_password);
         mErrorText = findViewById(R.id.textview_error_signup);
     }
 
@@ -45,10 +41,10 @@ public class LoginActivity extends BaseActivity implements OnLoginListener {
 
     @Override
     public void onSuccess(CurrentUser user) {
-        Intent intent = new Intent(getApplicationContext(),ListActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ListActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);
-        System.out.println("Login"+user.getName());
+        System.out.println("Login" + user.getName());
 
     }
 

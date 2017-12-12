@@ -21,7 +21,6 @@ import com.team11.personalfood.Models.FoodModel;
 import com.team11.personalfood.Utilities.Client;
 import com.team11.personalfood.Utilities.FoodListRecyclerAdapter;
 import com.team11.personalfood.Utilities.OnFoodLoadListener;
-import com.team11.personalfood.Utilities.OnLoginListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,21 +28,20 @@ import java.util.List;
 
 public class ListActivity extends BaseActivity implements OnFoodLoadListener{
 
-
+    //Constants
     private static final String TAG = "ListActivity";
-    private static final String TAG_CATEGORY = "Category";
     private static final String TAG_FOOD_NAME = "Food_Name";
-    private static final String TAG_INGREDIENT = "Ingredient";
     private static final String TAG_POSITIVE_INGREDIENT = "Positive_Ingredient";
     private static final String TAG_NEGATIVE_INGREDIENT = "Negative_Ingredient";
     private static final String TAG_FOOD_URL = "Food_URL";
     private static final String CONSTITUTION_URL = "http://13.230.142.157:8080/a/constitution/";
 
+    //View
     private RecyclerView foodListRecyclerView;
     private EditText searchEditText;
     private FoodListRecyclerAdapter adapter;
 
-
+    //Client
     private Client typeClient;
     private Client allCategoryClient;
     private Client riceClient;
@@ -78,9 +76,6 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
         toolbar.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
         setSupportActionBar(toolbar);
 
-        listActivityContext = this;
-
-        String userType = user.getType();
         foodListRecyclerView = findViewById(R.id.foodList_recyclerView);
         searchEditText = findViewById(R.id.search_editText);
 
@@ -100,6 +95,7 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
         Button searchBtn = findViewById(R.id.search_button);
 
         BtnOnClickListener btnOnClickListener = new BtnOnClickListener();
+        listActivityContext = this;
 
         typeClient = new Client(this);
         allCategoryClient = new Client(this);
@@ -118,10 +114,9 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
         searchClient = new Client(this);
 
         String mUrl = CONSTITUTION_URL + user.getType();
-        Log.d(TAG,"mURL - " + mUrl);
-        Log.d(TAG,"userType - " + userType);
+
+        //GetData from URL
         typeClient.getData(mUrl);
-//        typeClient.getData("http://13.230.142.157:8080/a/constitution/태음인");
         allCategoryClient.getData("http://13.230.142.157:8080/a/data/");
         riceClient.getData("http://13.230.142.157:8080/a/data/밥-죽");
         kimchiClient.getData("http://13.230.142.157:8080/a/data/김치-젓갈-장아찌");
@@ -297,5 +292,11 @@ public class ListActivity extends BaseActivity implements OnFoodLoadListener{
         foodModel.setOnFoodLoadListener(this);
         foodModel.fetchFood();
         mArrayList.clear();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 }

@@ -11,10 +11,6 @@ public class FoodModel {
     private List<Food> foodList = new ArrayList<>();
     private OnFoodLoadListener onFoodLoadListener;
 
-    public FoodModel(ArrayList<HashMap<String,String>> mArrayList) {
-
-    }
-
     public FoodModel(ArrayList<HashMap<String, String>> mArrayList, String tagFoodName, String tagFoodUrl, String tagNegativeIngredient, String tagPositiveIngredient) {
         for(HashMap hashMap : mArrayList) {
             foodList.add(new Food(hashMap.get(tagFoodName).toString(),

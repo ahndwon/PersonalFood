@@ -11,30 +11,16 @@ public class CurrentUser implements Serializable {
     private String birth;
     private String type;
 
-    //String userID, String password, String name, String birth, String type
 
     public CurrentUser(){
-//        this.userID = userID;
-//        this.password = password;
-//        this.name = name;
-//        this.birth = birth;
-//        this.type = type;
     }
 
     public String getUserID() {
         return userID;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public String getBirth() {
-        return birth;
     }
 
     public String getType() {

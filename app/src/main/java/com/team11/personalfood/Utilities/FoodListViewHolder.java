@@ -37,11 +37,10 @@ class FoodListViewHolder extends AbstractViewHolder<Food> {
     @Override
     public void onBindView(@NonNull Food item, int position) {
         foodName.setText(item.getFoodName());
-//        negativeIngredient.setText(item.getNegativeIngredient());
-//        positiveIngredient.setText(item.getPositiveIngredient());
 
+        //이미지 로드
         Picasso.with(ListActivity.listActivityContext).load(item.getFoodUrl()).into(foodImage);
-        //야매 fix
+
         negativeIngredient.setText(item.getPositiveIngredient());
         positiveIngredient.setText(item.getNegativeIngredient());
 

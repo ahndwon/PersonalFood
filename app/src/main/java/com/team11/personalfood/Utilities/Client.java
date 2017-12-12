@@ -24,22 +24,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Client {
-
+    //Constants
     private static String TAG = "ClIENT";
-
-    private static final String TAG_CATEGORY = "Category";
     private static final String TAG_FOOD_NAME = "Food_Name";
     private static final String TAG_INGREDIENT = "Ingredient";
     private static final String TAG_POSITIVE_INGREDIENT = "Positive_Ingredient";
     private static final String TAG_NEGATIVE_INGREDIENT = "Negative_Ingredient";
     private static final String TAG_FOOD_URL = "Food_URL";
 
-
     private LoginData loginData;
     private InsertData insertData;
-
-    String userId;
-    String password;
 
     private Context mContext;
 
@@ -51,16 +45,10 @@ public class Client {
     public Client(Context context) {
         this.mContext = context;
         mArrayList = new ArrayList<>();
-//        currentUser = new CurrentUser();
-
-//        GetData task = new GetData();
-//        task.execute(url);
     }
 
     public void getData(String url) {
         new GetData(onFoodLoadListener).execute(url);
-//        GetData task = new GetData();
-//        task.execute(url);
     }
 
     private class GetData extends AsyncTask<String, Void, String> {
@@ -77,7 +65,7 @@ public class Client {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(mContext,
-                    "Please Wait", null, true, true);
+                    "잠시만 기다려주세요", null, true, true);
         }
 
         @Override
@@ -152,7 +140,7 @@ public class Client {
     }
 
 
-    //음식 데이터 가져오기
+    //체질과 재료 비교하여 음식 데이터 가져오기
     public ArrayList getFoodResult(ArrayList<HashMap> typeIngredientList) {
         String[] token = new String[0];
         String[] negativeToken = new String[0];
@@ -282,6 +270,8 @@ public class Client {
         return mArrayList;
     }
 
+
+    //Used To Send User Sign up Information
     public class InsertData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
@@ -289,7 +279,7 @@ public class Client {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(mContext,
-                    "Please Wait", null, true, true);
+                    "잠시만 기다려주세요", null, true, true);
 
         }
 
@@ -320,12 +310,9 @@ public class Client {
 
             String serverURL = "http://13.230.142.157:8080/a/users/join/";
 
-
             try {
-
                 URL url = new URL(serverURL);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
 
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
@@ -371,12 +358,9 @@ public class Client {
                     sb.append(line);
                 }
 
-
                 bufferedReader.close();
 
-
                 return sb.toString();
-
 
             } catch (Exception e) {
 
@@ -388,7 +372,7 @@ public class Client {
         }
     }
 
-
+    //Used to send LoginData
     public class LoginData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         String errorString = null;
@@ -404,7 +388,7 @@ public class Client {
             super.onPreExecute();
 
             progressDialog = ProgressDialog.show(mContext,
-                    "Please Wait", null, true, true);
+                    "잠시만 기다려주세요", null, true, true);
         }
 
 
@@ -412,16 +396,12 @@ public class Client {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             user = new CurrentUser();
-
             progressDialog.dismiss();
-
-            Log.d(TAG, "response  - " + result);
 
             if (!result.equals("wrong login")) {
                 try {
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject parser = jsonArray.getJSONObject(0);
-//                JSONObject parser = new JSONObject(result.substring(1,result.length()-1));
 
                     user.setUserID(parser.getString("UserID"));
                     user.setPassword(parser.getString("Password"));
@@ -443,11 +423,6 @@ public class Client {
 
                 }
             }
-
-
-//            Intent intent = new Intent(getApplicationContext(),ListActivity.class);
-//        startActivity(intent);
-            Log.d(TAG, "POST response  - " + result);
         }
 
         @Override
@@ -472,8 +447,8 @@ public class Client {
                 httpURLConnection.connect();
 
                 JSONObject jsonParam = new JSONObject();
-                jsonParam.put("userID", params[0]);
-                jsonParam.put("password", params[1]);
+                jsonParam.put("userID", userID);
+                jsonParam.put("password", password);
                 Log.d(TAG, "jsonParam - " + "[" + jsonParam.toString() + "]");
 
                 OutputStream outputStream = httpURLConnection.getOutputStream();
